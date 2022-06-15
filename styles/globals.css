@@ -14,3 +14,33 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.bg-purple {
+  background-color: #4B1979;
+  border-color: #4B1979 !important;
+}
+
+.btn-primary {
+  background-color: #4B1979;
+  border-color: #4B1979 !important;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -ms-border-radius: 10px 10px 10px 10px;
+  -o-border-radius: 10px 10px 10px 10px;
+}
+
+.btn-primary:hover {
+  background-color: #6b2ea5;
+  border-color: #4B1979 !important;
+}
+
+.btn-primary:focus {
+  background-color: #4B1979;
+  border-color: #4B1979 !important;
+  /* lighting-color: #4B1979; */
+}
+
+.txt-field:focus {
+  border-color: #f8f9fa !important;
+}
