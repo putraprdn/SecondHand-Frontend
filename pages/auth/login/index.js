@@ -1,5 +1,8 @@
 import Head from "next/head";
+import Image from "next/image";
 import styles from "../../../styles/Auth.module.css";
+import googleImage from "../../../public/images/google.png";
+import facebookImage from "../../../public/images/facebook.png";
 
 export default function Login() {
   return (
@@ -37,16 +40,28 @@ export default function Login() {
                 ></input>
               </div>
             </div>
-            <button type="button" className={styles.button}>
-              Masuk
-            </button>
             <p className={styles.forget}>
               <a href="forget-password">Lupa password?</a>
             </p>
+            <button type="button" className={styles.button}>
+              Masuk
+            </button>
             <div className={styles.line}>
               <hr />
               <span>or</span>
               <hr />
+            </div>
+            <div className={styles.buttonAuth}>
+              <button type="button" className={styles.facebook}>
+                <Image src={facebookImage} height={20} width={20}></Image>
+                Facebook
+              </button>
+              <button type="button" className={styles.auth}>
+                <Image src={googleImage} height={20} width={20}></Image> Google
+              </button>
+            </div>
+            <div className={styles.line2}>
+              <hr></hr>
             </div>
             <p className={styles.footer}>
               Belum punya akun? <a href="register">Daftar disini</a>

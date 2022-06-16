@@ -29,10 +29,10 @@ export default function Login() {
                 ></input>
               </div>
               <div>
-                <label for="confPassword">Konfirmasi Password</label>
+                <label for="confirmPassword">Konfirmasi Password</label>
                 <input
                   type="password"
-                  id="confPassword"
+                  id="confirmPassword"
                   placeholder="Masukkan Password Konfirmasi"
                 ></input>
               </div>

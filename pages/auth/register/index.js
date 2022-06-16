@@ -40,6 +40,14 @@ export default function Register() {
                   placeholder="Masukkan Password"
                 ></input>
               </div>
+              <div>
+                <label for="confirmPassword">Konfirmasi Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Masukkan Konfirmasi Password"
+                ></input>
+              </div>
             </div>
             <button type="button" className={styles.button}>
               Daftar

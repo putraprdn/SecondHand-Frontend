@@ -49,7 +49,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 .input div {
   display: flex;
@@ -72,6 +72,16 @@
   color: #000000;
   border: 2px solid #7126b5;
 }
+.forget {
+  font-size: 14px;
+  font-weight: 400;
+  color: #7126b5;
+  text-align: end;
+  margin-bottom: 20px;
+}
+.forget a:hover {
+  color: #a153ea;
+}
 .button {
   cursor: pointer;
   border: 0;
@@ -79,33 +89,62 @@
   padding: 12px 16px;
   background: #7126b5;
   color: white;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
 }
 .button:active {
   background-color: #a153ea;
-}
-.forget {
-  /* font-style: normal; */
-  font-size: 14px;
-  font-weight: 400;
-  color: #7126b5;
-  text-align: center;
-}
-.forget a:hover {
-  color: #a153ea;
 }
 .line {
   display: flex;
   text-align: center;
   line-height: 0.1em;
-  margin: 10px 0 20px;
+  margin: 20px 0 20px;
   align-items: center;
 }
 .line hr {
   width: 40%;
   margin: auto;
 }
+.line2 {
+  margin: 20px 0 0px;
+}
+.line2 hr {
+  width: 90%;
+  margin: auto;
+}
+.buttonAuth {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+}
+.buttonAuth button {
+  cursor: pointer;
+  border: 2px solid #d0d0d0;
+  border-radius: 16px;
+  padding: 12px 16px;
+  background: white;
+  color: black;
+  width: 100%;
+  justify-content: space-around;
+}
+.buttonAuth button:hover {
+  background: #cecece;
+}
+.buttonAuth button:active {
+  background: #a153ea;
+}
+.buttonAuth button {
+  display: flex;
+  flex-direction: row;
+  gap: 45px;
+  align-items: center;
+  justify-content: start;
+  font-weight: 500;
+}
+
 .footer {
+  margin-top: 20px;
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
