@@ -44,3 +44,22 @@ a {
 .txt-field:focus {
   border-color: #f8f9fa !important;
 }
+
+.card.text-white.card-img {
+  width: 95% !important;
+  height: 250px !important;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.card-img {
+  height: 100%;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
