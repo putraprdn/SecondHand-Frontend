@@ -16,8 +16,10 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-feather": "^2.0.10",
+    "react-image-picker": "^1.1.1",
     "react-slick": "^0.29.0",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "use-file-picker": "^1.4.2"
   },
   "devDependencies": {
     "eslint": "8.17.0",
