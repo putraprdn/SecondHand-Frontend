@@ -24,6 +24,8 @@ const FormEdit = () => {
       setSrc(reader.result);
     }
     reader.readAsDataURL(file);
+    console.log(file)
+    console.log(reader);
   }
 
   const getProvince = async () => {
@@ -80,14 +82,14 @@ const FormEdit = () => {
   })
 
   const onEditProfile = (values) => {
-      const res = values 
+      const res = { ...values, img: srci}
       console.log(res)
   }
 
   return (
     <div className="container-md d-flex flex-column mt-5 justify-content-center align-items-center">
       <div className="align-self-start">
-        <ArrowLeft onClick={() => router.back()}/>
+        <ArrowLeft className={styles.pointer} onClick={() => router.back()}/>
       </div>
       <div className='w-75'>
         <form onSubmit={formik.handleSubmit} className="d-flex flex-column justify-content-center align-items-center">
@@ -104,7 +106,8 @@ const FormEdit = () => {
                 <Image 
                   src={srci} 
                   alt="vercel"
-                  layout="fill" 
+                  width={160} 
+                  height={160}
                   quality={100}
                   className={styles.img}
                 />
@@ -168,7 +171,7 @@ const FormEdit = () => {
               <div className="text-danger">{formik.errors.noHP}</div>
             ) : null}
           </div>
-          <button className={styles.btn_input} type="submit">Simpan</button>
+          <button className="btn btn-primary w-100" type="submit">Simpan</button>
         </form>
       </div>
     </div>

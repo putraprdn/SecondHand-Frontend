@@ -1,10 +1,14 @@
 import { ProductCarousal, Navbar, ProductDesc, CardPrice, SellerCardProfile, CardBuy } from '../../../components'
 import { ModalTawar } from '../../../components'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 const DetailProduct = ({productDetail}) => {
     
   const [isOpen, setIsOpen] = useState(false)
+
+  const router = useRouter()
+  const { id } = router.query
     
   const handleOpen = (isOpen) => {
     setIsOpen(isOpen)
