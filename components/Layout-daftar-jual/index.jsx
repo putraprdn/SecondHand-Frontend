@@ -17,7 +17,7 @@ const LayoutDaftarJual = ({children}) => {
                 <h5 className="fw-bold my-4">Daftar Jual Saya</h5>
                 <div className="profile-Tag position-relative">
                     <SellerCardProfile />
-                    <Link href="/profile/edit"><a className="btn btn-outlined-primary position-absolute" style={{right:20, top:25}}> Edit </a></Link>
+                    <Link href="/profile/edit"><a className="btn btn-outline-primary position-absolute" style={{right:20, top:25}}> Edit </a></Link>
                 </div>
                 <div className="row">
                     <div className="col-md-3 sidebar">

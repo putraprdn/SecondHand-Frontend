@@ -1,5 +1,6 @@
 import { LayoutDaftarJual } from "../../../components"
 import { useRouter } from "next/router"
+import { Plus } from "react-feather"
 
 const List = () => {
     
@@ -8,8 +9,17 @@ const List = () => {
     console.log(name);
 
   return (
-    <LayoutDaftarJual>      
-            <h1>Daftar {name}</h1>
+    <LayoutDaftarJual>
+      <div className="row g-3">
+        <div className="col-md-4 col-lg-3">
+            <div className="btn position-relative border border-2 br-10 border-dashed" style={{ width: "100%", height: "230px" }} onClick={() => router.push('/product/add', 'product') }>
+                <div className="position-absolute top-50 start-50 translate-middle">
+                    <Plus size={20} color="grey" />
+                    <p className="text-muted">Tambah Produk</p>
+                </div>
+            </div>
+        </div>
+      </div>
     </LayoutDaftarJual>
   )
 }

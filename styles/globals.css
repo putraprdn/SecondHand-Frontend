@@ -53,50 +53,148 @@ p {
   font-weight: 500;
 }
 
-.btn-primary{
-  background: #7126B5;
-  border-radius: 16px;
-  font-weight: 500;
-  border-color: #8129d4;
-}
-
-.btn-primary:active,
-.btn-primary:hover{
-  background: #5c00b3;
-  font-weight: 500;
-  border-color: #8129d4;
-}
-
-.btn-primary:focus{
-  background: #5c00b3;
-  font-weight: 500;
-  border-color: #8129d4;
-  box-shadow: 0 0 0 0.25rem rgba(160, 65, 249, 0.5);
-}
-
-.btn-outlined-primary{
-  background: #ffffff;
-  border-radius: 16px;
-  font-weight: 500;
-  border-color: #8129d4;
-}
-
-.btn-outlined-primary:active,
-.btn-outlined-primary:hover{
-  background: #5c00b3;
-  font-weight: 500;
-  color: white;
-  border-color: #8129d4;
-}
-
-.btn-outlined-primary:focus{
-  background: #5c00b3;
-  font-weight: 500;
-  color: white;
-  border-color: #8129d4;
-  box-shadow: 0 0 0 0.25rem rgba(160, 65, 249, 0.5);
-}
-
 a:hover{
   color: #7126B5;
+}
+
+.active-link{
+  color: #7126B5;
+}
+  
+.bg-purple {
+  background-color: #4B1979;
+  border-color: #4B1979 !important;
+}
+
+.btn-primary {
+  background-color: #4B1979;
+  border-color: #4B1979 !important;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -ms-border-radius: 10px 10px 10px 10px;
+  -o-border-radius: 10px 10px 10px 10px;
+}
+
+.btn-primary:hover {
+  background-color: #6b2ea5;
+  border-color: #4B1979 !important;
+}
+
+.btn-primary:focus {
+  background-color: #4B1979;
+  border-color: #4B1979 !important;
+  /* lighting-color: #4B1979; */
+}
+
+.btn-secondary {
+  background-color: #E2D4F0;
+  border-color: #E2D4F0 !important;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -ms-border-radius: 10px 10px 10px 10px;
+  -o-border-radius: 10px 10px 10px 10px;
+}
+
+.btn-secondary:hover {
+  background-color: #e6e1ec;
+  border-color: #E2D4F0 !important;
+}
+
+.btn-secondary:focus {
+  background-color: #E2D4F0;
+  border-color: #E2D4F0 !important;
+  /* lighting-color: #4B1979; */
+}
+
+.btn-outline-primary {
+  /* background-color: #4B1979; */
+  color: #4B1979;
+  border-color: #4B1979 !important;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -ms-border-radius: 10px 10px 10px 10px;
+  -o-border-radius: 10px 10px 10px 10px;
+}
+
+.btn-outline-primary:hover {
+  background-color: #6b2ea5;
+  border-color: #4B1979 !important;
+}
+
+.btn-outline-primary:focus {
+  background-color: #4B1979;
+  border-color: #4B1979 !important;
+  /* lighting-color: #4B1979; */
+}
+
+.btn-outline-secondary {
+  /* background-color: #E2D4F0; */
+  color: #4B1979;
+  border-color: #E2D4F0 !important;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -ms-border-radius: 10px 10px 10px 10px;
+  -o-border-radius: 10px 10px 10px 10px;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #e6e1ec;
+  border-color: #E2D4F0 !important;
+}
+
+.btn-outline-secondary:focus {
+  background-color: #E2D4F0;
+  border-color: #E2D4F0 !important;
+  /* lighting-color: #4B1979; */
+}
+
+.txt-outline-field:focus {
+  border-color: #f8f9fa !important;
+}
+
+.card.text-white.card-img {
+  width: 95% !important;
+  height: 250px !important;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.card-img {
+  height: 100%;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.br-10 {
+  border-radius: 10px !important;
+  -webkit-border-radius: 10px !important;
+  -moz-border-radius: 10px !important;
+  -ms-border-radius: 10px !important;
+  -o-border-radius: 10px !important;
+}
+
+.br-20 {
+  border-radius: 20px !important;
+  -webkit-border-radius: 20px !important;
+  -moz-border-radius: 20px !important;
+  -ms-border-radius: 20px !important;
+  -o-border-radius: 20px !important;
+}
+
+.border-dashed {
+  border-style: dashed !important;
+  -webkit-border-style: dashed !important;
+  -moz-border-style: dashed !important;
+  -ms-border-style: dashed !important;
+  -o-border-style: dashed !important;
 }
