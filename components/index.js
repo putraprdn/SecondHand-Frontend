@@ -7,5 +7,7 @@ import CardBuy from './buy-card-price'
 import SellerCardProfile from './seller-profile-card'
 import ModalTawar from './modal-tawar'
 import LayoutDaftarJual from './Layout-daftar-jual'
+import CardProduct from './Layout-daftar-jual/card-product'
+import NotFound from './Layout-daftar-jual/Not-found';
 
-export { Navbar, FormEdit, ProductCarousal, ProductDesc, CardPrice, SellerCardProfile, CardBuy, ModalTawar, LayoutDaftarJual }
+export { Navbar, FormEdit, ProductCarousal, ProductDesc, CardPrice, SellerCardProfile, CardBuy, ModalTawar, LayoutDaftarJual, CardProduct, NotFound }

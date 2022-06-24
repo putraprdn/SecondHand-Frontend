@@ -2,12 +2,9 @@ import { Fragment } from "react"
 import { Navbar, SellerCardProfile } from "../index"
 import SideBar from "./sidebar";
 import Link from 'next/link';
-import { useRouter } from 'next/router'
 
 
 const LayoutDaftarJual = ({children}) => {
-
-    const router = useRouter()
 
   return (
     <Fragment>
