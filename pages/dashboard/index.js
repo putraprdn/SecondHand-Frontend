@@ -1,7 +1,7 @@
 import Link from 'next/link'
+import { NavBar } from '../../components';
 import AdsCarousel from './components/ads-carousel';
 import CategoryTab from './components/category-tab';
-import NavBar from './components/navbar';
 import ProductList from './components/product-list';
 
 const Dashboard = () => {

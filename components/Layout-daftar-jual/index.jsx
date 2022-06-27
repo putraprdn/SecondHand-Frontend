@@ -1,5 +1,5 @@
 import { Fragment } from "react"
-import { Navbar, SellerCardProfile } from "../index"
+import { NavBar, SellerCardProfile } from "../index"
 import SideBar from "./sidebar";
 import Link from 'next/link';
 
@@ -8,13 +8,13 @@ const LayoutDaftarJual = ({children}) => {
 
   return (
     <Fragment>
-        <Navbar />    
+        <NavBar />    
         <main>
             <div className="container d-flex flex-column"> 
-                <h5 className="fw-bold my-4">Daftar Jual Saya</h5>
+                <h5 className="fw-bold mb-4">Daftar Jual Saya</h5>
                 <div className="profile-Tag position-relative">
                     <SellerCardProfile />
-                    <Link href="/profile/edit"><a className="btn btn-outline-primary position-absolute" style={{right:20, top:25}}> Edit </a></Link>
+                    <Link href="/profile/edit"><a className="btn btn-outline-primary position-absolute" style={{right:20, top:23, padding:"5px 20px"}}> Edit </a></Link>
                 </div>
                 <div className="row">
                     <div className="col-md-3 sidebar">

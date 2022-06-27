@@ -21,7 +21,7 @@ export default function Login() {
             <p className={styles.head}>Password Baru</p>
             <div className={styles.input}>
               <div>
-                <label for="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   id="password"
@@ -29,7 +29,7 @@ export default function Login() {
                 ></input>
               </div>
               <div>
-                <label for="confirmPassword">Konfirmasi Password</label>
+                <label htmlFor="confirmPassword">Konfirmasi Password</label>
                 <input
                   type="password"
                   id="confirmPassword"

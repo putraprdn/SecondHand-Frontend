@@ -24,7 +24,7 @@ export default function Login() {
             <p className={styles.head}>Masuk</p>
             <div className={styles.input}>
               <div>
-                <label for="email">Email</label>
+                <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   id="email"
@@ -32,7 +32,7 @@ export default function Login() {
                 ></input>
               </div>
               <div>
-                <label for="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   id="password"
@@ -53,11 +53,11 @@ export default function Login() {
             </div>
             <div className={styles.buttonAuth}>
               <button type="button" className={styles.facebook}>
-                <Image src={facebookImage} height={20} width={20}></Image>
+                <Image src={facebookImage} height={20} width={20} alt="facebook"></Image>
                 Facebook
               </button>
               <button type="button" className={styles.auth}>
-                <Image src={googleImage} height={20} width={20}></Image> Google
+                <Image src={googleImage} height={20} width={20} alt="google"></Image> Google
               </button>
             </div>
             <div className={styles.line2}>

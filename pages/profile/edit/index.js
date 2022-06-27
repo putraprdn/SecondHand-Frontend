@@ -1,10 +1,10 @@
-import { Navbar, FormEdit } from "../../../components"
+import { HeaderBar, FormEdit } from "../../../components"
 
 const EditProfile = () => {
   return (
     <div className="edit_profile">
         <div>
-            <Navbar />
+            <HeaderBar tittle="Lengkapi Info Akun"/>
         </div>
         <div>
             <FormEdit />

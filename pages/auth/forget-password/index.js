@@ -21,7 +21,7 @@ export default function Login() {
             <p className={styles.head}>Permintaan Ganti Password</p>
             <div className={styles.input}>
               <div>
-                <label for="email">Email</label>
+                <label forHTML="email">Email</label>
                 <input
                   type="email"
                   id="email"

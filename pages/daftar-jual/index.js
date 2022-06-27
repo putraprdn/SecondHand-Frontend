@@ -4,7 +4,7 @@ const DaftarJual = () => {
 
   return (
     <LayoutDaftarJual>      
-            <h1>Daftar Jual</h1>
+        <h1>Daftar Jual</h1>
     </LayoutDaftarJual>
   )
 }

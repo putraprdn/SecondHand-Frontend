@@ -1,15 +1,6 @@
-import { ProductCarousal, NavBar, ProductDesc, SellerCardProfile, CardBuy } from '../../../components'
-import { ModalTawar } from '../../../components'
-import { useRouter } from 'next/router'
+import { ProductCarousal, NavBar, ProductDesc, CardPrice, SellerCardProfile } from '../../../../components'
 
-const DetailProduct = ({productDetail}) => {
-
-  const router = useRouter()
-  const { id } = router.query
-  const data = {
-    foo : true,
-    pid : id
-  }
+const PreviewProduct = ({productDetail}) => {
     
   return (
     <div>
@@ -20,7 +11,7 @@ const DetailProduct = ({productDetail}) => {
                     <ProductCarousal />
                 </div>
                 <div className='col-lg-4 col-md-5'>
-                    <CardBuy seller={data}/>
+                    <CardPrice />
                     <SellerCardProfile />
                 </div>
             </div>
@@ -32,11 +23,8 @@ const DetailProduct = ({productDetail}) => {
                 </div>
             </div>
         </div>
-        <div>
-            <ModalTawar />
-        </div>
     </div>
   )
 }
 
-export default DetailProduct
+export default PreviewProduct

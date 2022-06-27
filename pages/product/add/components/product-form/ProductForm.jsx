@@ -2,6 +2,7 @@ import { useState } from "react";
 import currencyFormat from "../../../../dashboard/service/currency";
 import { Plus } from "react-feather"
 import { useFilePicker } from 'use-file-picker';
+import Link from "next/link";
 
 const ProductForm = () => {
     const [Images, setImages] = useState([]);
@@ -78,7 +79,7 @@ const ProductForm = () => {
 
                 <div className="row">
                     <div className="col">
-                        <button type="submit" className="btn btn-outline-primary w-100">Preview</button>
+                        <Link href="/product/add/preview"><button type="submit" className="btn btn-outline-primary w-100">Preview</button></Link>
                     </div>
                     <div className="col">
                         <button type="submit" className="btn btn-primary w-100">Terbitkan</button>

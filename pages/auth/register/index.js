@@ -21,11 +21,11 @@ export default function Register() {
             <p className={styles.head}>Daftar</p>
             <div className={styles.input}>
               <div>
-                <label for="name">Nama</label>
+                <label htmlFor="name">Nama</label>
                 <input type="name" id="name" placeholder="Nama Lengkap"></input>
               </div>
               <div>
-                <label for="email">Email</label>
+                <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   id="email"
@@ -33,7 +33,7 @@ export default function Register() {
                 ></input>
               </div>
               <div>
-                <label for="password">Password</label>
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   id="password"
@@ -41,7 +41,7 @@ export default function Register() {
                 ></input>
               </div>
               <div>
-                <label for="confirmPassword">Konfirmasi Password</label>
+                <label htmlFor="confirmPassword">Konfirmasi Password</label>
                 <input
                   type="password"
                   id="confirmPassword"

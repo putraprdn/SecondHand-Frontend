@@ -1,0 +1,16 @@
+.w-444 {
+    width: 444px;
+}
+
+@media screen and (max-width: 425px) {
+    .w-444 {
+        width: 190px !important;
+    }
+}
+
+@media screen and (max-width: 672px) {
+    .w-444 {
+        width: 300px;
+    }
+  }
+    

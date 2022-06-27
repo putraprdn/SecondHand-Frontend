@@ -1,29 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CurrencyInput from 'react-currency-input-field';;
 import styles from '../../styles/ModalTawar.module.css'
 
 const ModalTawar = ({ setIsOpen }) => {
-
-  const [className, setClassName] = useState('');
-
-  const validateValue = (value) => {
-
-    if (!value) {
-      setClassName('');
-    } else if (Number.isNaN(Number(value))) {
-      setClassName('is-invalid');
-    } else {
-      setClassName('is-valid');
-    }
-  };
-
   return (
-    <div className={styles.background}>
-      <div className="modal-dialog modal-dialog-centered" tabIndex="-1">
-          <div className="modal-dialog">
+    <div className="modal fade" id="modalTawar" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered justify-content-around">
             <div className="modal-content px-3 rounded-16" style={{width:360}}>
               <div className="modal-header border-bottom-0">
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => setIsOpen(false)}></button>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body py-0">
                 <p className='fw-bold'>Masukkan Harga Tawarmu</p>
@@ -49,8 +34,7 @@ const ModalTawar = ({ setIsOpen }) => {
                   decimalSeparator=","
                   groupSeparator="."
                   allowDecimals={false}
-                  className={`form-control px-3 py-2 shadow-sm rounded-16 ${className}`}
-                  onValueChange={validateValue}
+                  className={"form-control px-3 py-2 shadow-sm rounded-16"}
                   prefix={'Rp'}
                   step={10}
                 />
@@ -60,7 +44,6 @@ const ModalTawar = ({ setIsOpen }) => {
               </div>
             </div>
           </div>
-      </div>
     </div>
   )
 }
