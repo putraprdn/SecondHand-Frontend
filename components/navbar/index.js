@@ -1,7 +1,7 @@
 import Logo from "./components/logo";
 import SearchEngine from "./components/SearchEngine";
 import LoginButton from "./components/LoginButton";
-import IconButton from "./components/icon";
+import IconButton from "./components/Icon";
 import { useState } from "react";
 
 const NavBar = () => {
@@ -17,11 +17,11 @@ const NavBar = () => {
                 <SearchEngine />
                     <ul className="navbar-nav ms-md-auto flex-sm-row">
                         {!user ? 
-                            <LoginButton />
+                            <IconButton />
                           :
                           <li className="nav-item">
                             <IconButton />    
-                        </li>
+                            </li>
                         }
                         
                     </ul>
