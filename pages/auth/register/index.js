@@ -1,7 +1,59 @@
 import Head from "next/head";
 import styles from "../../../styles/Auth.module.css";
 
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useRouter } from 'next/router';
+import { postRequest } from '../../api/apiConfig';
+
+
 export default function Register() {
+
+  const router = useRouter();
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .required('Nama harus diisi'),
+      email: Yup.string()
+        .email()
+        .required('Email harus diisi'),
+      password: Yup.string()
+        .required('Password harus diisi')
+        .min(8, 'Password minimal 6 karakter')
+        .matches(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+          "Harus berisi 8 karakter, satu huruf besar, satu huruf kecil, dan satu angka"
+        ),
+      confirmPassword: Yup.string()
+        .required()
+        .oneOf([Yup.ref("password"), null], "Passwords harus sama"),
+    }),
+    onSubmit: values => {
+      onRegister(values)
+    },
+  })
+
+  const onRegister = async (values) => {
+      try {
+        const { name : thisName, email : thisEmail, password: thisPassword} = values
+        await postRequest('user/register', {
+          name : thisName,
+          email : thisEmail,
+          password: thisPassword
+        }, 1000)
+        router.push('/auth/login')
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -20,38 +72,70 @@ export default function Register() {
           <div className={styles.card}>
             <p className={styles.head}>Daftar</p>
             <div className={styles.input}>
-              <div>
-                <label htmlFor="name">Nama</label>
-                <input type="name" id="name" placeholder="Nama Lengkap"></input>
-              </div>
-              <div>
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="Contoh: johndee@gmail.com"
-                ></input>
-              </div>
-              <div>
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="Masukkan Password"
-                ></input>
-              </div>
-              <div>
-                <label htmlFor="confirmPassword">Konfirmasi Password</label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  placeholder="Masukkan Konfirmasi Password"
-                ></input>
-              </div>
+              <form onSubmit={formik.handleSubmit}>
+                <div className="mb-3">
+                  <label htmlFor="name">Nama</label>
+                  <input 
+                    type="name" 
+                    id="name" 
+                    placeholder="Nama Lengkap"
+                    name="name"
+                    onChange={formik.handleChange}
+                    value={formik.values.name}
+                  />
+                    {formik.touched.name && formik.errors.name ? (  
+                      <div className="text-danger">{formik.errors.name}</div>
+                    ) : null}
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="Contoh: johndee@gmail.com"
+                    name="email"
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
+                  />
+                    {formik.touched.email && formik.errors.email ? (
+                      <div className="text-danger">{formik.errors.email}</div>
+                    ) : null}
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    placeholder="Masukkan Password"
+                    name="password"
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                  />
+                  <p className="mb-0">Gunakan minimal 8 karakter dengan campuran huruf, angka {'&'} simbol</p>
+
+                  {formik.touched.password && formik.errors.password ? (
+                      <div className="text-danger">{formik.errors.password}</div>
+                    ) : null}
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="confirmPassword">Konfirmasi Password</label>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Masukkan Konfirmasi Password"
+                    name="confirmPassword"
+                    onChange={formik.handleChange}
+                    value={formik.values.confirmPassword}
+                  />
+                  {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+                      <div className="text-danger">{formik.errors.confirmPassword}</div>
+                    ) : null}
+                </div>
+                <button type="submit" className={styles.button}>
+                  Daftar
+                </button>
+              </form>            
             </div>
-            <button type="button" className={styles.button}>
-              Daftar
-            </button>
             <p className={styles.footer}>
               Sudah punya akun? <a href="login">Masuk disini</a>
             </p>

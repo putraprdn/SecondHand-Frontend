@@ -1,4 +1,5 @@
 import { List, Bell, User, LogOut } from 'react-feather'
+import Notif from './Notif'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -7,6 +8,10 @@ const IconButton = () => {
   const router = useRouter()
   const path = ['list', 'diminati', 'terjual']
 
+  const logout = () => {
+    localStorage.removeItem('token')
+    router.push('/auth/login')
+  }
   return (
     <>
         <li className="nav-item me-3">
@@ -16,8 +21,10 @@ const IconButton = () => {
           <a className="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <Bell />
           </a>
-          <ul className="dropdown-menu dropdown-menu-end position-absolute" aria-labelledby="navbarDropdown">
-            <li><a className="dropdown-item" href="#">Action</a></li>
+          <ul className="dropdown-menu dropdown-menu-end position-absolute rounded-16 shadow notif" aria-labelledby="navbarDropdown">
+            <li>
+              <Notif />
+            </li>
             <li><a className="dropdown-item" href="#">Another action</a></li>
           </ul>
         </li>
@@ -25,9 +32,11 @@ const IconButton = () => {
           <a className="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <User />
           </a>
-          <ul className="dropdown-menu dropdown-menu-end position-absolute" aria-labelledby="navbarDropdown">
+          <ul className="dropdown-menu dropdown-menu-end position-absolute rounded-16" aria-labelledby="navbarDropdown">
             <li><Link  href="/profile/edit"><a className="dropdown-item"><User className="me-2"/> Edit</a></Link></li>
-            <li><Link  href="/auth/login"><a className="dropdown-item text-danger"><LogOut className="me-2"/> Log Out</a></Link></li>
+            <li>
+                <a className="mb-1 dropdown-item text-danger" onClick={() => logout()} style={{cursor:"pointer"}}><LogOut className="me-2"/> Log Out</a>
+            </li>
           </ul>
         </li>    
     </>
