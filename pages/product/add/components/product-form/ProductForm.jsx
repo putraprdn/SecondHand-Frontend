@@ -10,7 +10,7 @@ const ProductForm = () => {
         readAs: 'DataURL',
         accept: 'image/*',
         multiple: true,
-        limitFilesConfig: { max: 100000 },
+        limitFilesConfig: { max: 4 },
         // minFileSize: 0.1, // in megabytes
         maxFileSize: 50,
         imageSizeRestrictions: {
@@ -36,7 +36,7 @@ const ProductForm = () => {
                     <div className="mb-3">
                         <label htmlFor="cb_kategori" className="form-label">Kategori</label>
                         <select name="cb_kategori" id="cb_kategori" className="form-control br-10">
-                            <option selected>Pilih Kategori</option>
+                            <option selected>-- Pilih Kategori --</option>
                             <option value="Hobi">Hobi</option>
                             <option value="Kendaraan">Kendaraan</option>
                             <option value="Baju">Baju</option>
