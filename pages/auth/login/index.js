@@ -4,7 +4,43 @@ import styles from "../../../styles/Auth.module.css";
 import googleImage from "../../../public/images/google.png";
 import facebookImage from "../../../public/images/facebook.png";
 
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useRouter } from 'next/router';
+import { postRequest } from '../../api/apiConfig';
+
 export default function Login() {
+
+  const router = useRouter();
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email()
+        .required('Email harus diisi'),
+      password: Yup.string()
+        .required('Password harus diisi'),
+    }),
+    onSubmit: values => {
+      onLogin(values)
+    },
+  })
+
+  const onLogin = async (values) => {
+      try {
+        const login = await postRequest('user/login', values)
+        localStorage.setItem('token', `Bearer ${login.data.token}`)
+        console.log(login.data);
+        router.push('/dashboard')
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -23,29 +59,44 @@ export default function Login() {
           <div className={styles.card}>
             <p className={styles.head}>Masuk</p>
             <div className={styles.input}>
-              <div>
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="Contoh: johndee@gmail.com"
-                ></input>
-              </div>
-              <div>
-                <label htmlFor="password">Password</label>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="Masukkan Password"
-                ></input>
-              </div>
+              <form onSubmit={formik.handleSubmit}>
+                <div className="mb-2">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="Contoh: johndee@gmail.com"
+                    name="email"
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
+                  />
+                    {formik.touched.email && formik.errors.email ? (
+                      <div className="text-danger">{formik.errors.email}</div>
+                    ) : null}
+
+                </div>
+                <div>
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    placeholder="Masukkan Password"
+                    name="password"
+                    onChange={formik.handleChange}
+                    value={formik.values.password}
+                  />
+                    {formik.touched.password && formik.errors.password ? (
+                      <div className="text-danger">{formik.errors.password}</div>
+                    ) : null}
+                </div>
+                <p className={styles.forget}>
+                  <a href="forget-password">Lupa password?</a>
+                </p>
+                <button type="submit" className={styles.button}>
+                  Masuk
+                </button>
+              </form>
             </div>
-            <p className={styles.forget}>
-              <a href="forget-password">Lupa password?</a>
-            </p>
-            <button type="button" className={styles.button}>
-              Masuk
-            </button>
             <div className={styles.line}>
               <hr />
               <span>or</span>
