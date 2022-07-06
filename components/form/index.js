@@ -1,31 +1,38 @@
-import { useState, useEffect } from "react"
-import styles from '../../styles/Form.module.css'
-import Image from 'next/image'
-import axios from "axios"
+import { useState, useEffect } from "react";
+import styles from '../../styles/Form.module.css';
+import Image from 'next/image';
+import axios from "axios";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import { ArrowLeft } from "react-feather";
+
+import { checkToken } from './../../services/Token';
 
 const FormEdit = () => {
   
+  const router = useRouter()
+
   const [srci, setSrc] = useState('/uploadimg.svg')
   const [province, setProvince] = useState([])
   const [city, setCity] = useState([])
   const [cityid, setCityId] = useState([])
+  const [imageUser, setFormData] = useState('')
+  const [isLoggedIn, setIsLoggedIn] = useState('');
 
-  const router = useRouter()
+  useEffect(function() {
+     const token = localStorage.getItem('token')
+     const tokenUser = checkToken(token)
+     setIsLoggedIn(tokenUser)
+  },[]);
+
 
   const onUpload = (e) => {
     e.preventDefault();
-    const reader = new FileReader();
     const file = e.target.files[0];
-    reader.onloadend = () => {
-      setSrc(reader.result);
-    }
-    reader.readAsDataURL(file);
-    console.log(file)
-    console.log(reader);
+    setFormData(file)
+    
+    setSrc(URL.createObjectURL(file));
   }
 
   const getProvince = async () => {
@@ -59,12 +66,14 @@ const FormEdit = () => {
     getCity()
   })
 
+  const phoneRegExp = "(08\\d{1,4}(\\s*[\\-]\\s*)\\d{0,4}(\\s*[\\-]\\s*)\\d{3,5}|08\\d{9,11}$)|(^\\+(?:[0-9] ?){6,13}[0-9]$)|(^(?:(?:\\+|0{0,2})62) ?\\d{0,3}(\\s*[\\-]\\s*)\\d{0,4}(\\s*[\\-]\\s*)\\d{0,5})"
+
   const formik = useFormik({
     initialValues: {
       nama: '',
       kota: '',
       alamat: '',
-      noHP: '',
+      phoneNumber: '',
     },
     validationSchema: Yup.object({
       nama: Yup.string()
@@ -73,17 +82,40 @@ const FormEdit = () => {
         .required('Kota harus diisi'),
       alamat: Yup.string()
         .required('Alamat harus diisi'),
-      noHP: Yup.string()
-        .required('No HP harus diisi'),
+      phoneNumber: Yup.string()
+        .required('Nomor telepon harus diisi')
+        .matches(phoneRegExp, 'Phone number is not valid'),
     }),
     onSubmit: values => {
-      onEditProfile(values)
+      onEditProfile(values, imageUser)
     },
   })
 
-  const onEditProfile = (values) => {
-      const res = { ...values, img: srci}
-      console.log(res)
+  const onEditProfile = async (values, imageUser) => {
+      try {
+        
+        const form = new FormData();
+        form.append('name', values.nama);
+        form.append('city', values.kota);
+        form.append('address', values.alamat);
+        form.append('phoneNumber', values.phoneNumber);
+        form.append('image', imageUser);
+
+        const res = await axios.put(`https://pa-be-k3.herokuapp.com/api/user/update/${isLoggedIn}`, 
+          form, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              'Authorization' : `${isLoggedIn}`
+            }
+        })
+
+        console.log(res.data);
+
+        router.push('/dashboard')
+
+      } catch (error) {
+        console.log(error);
+      }
   }
 
   return (
@@ -165,10 +197,10 @@ const FormEdit = () => {
             ) : null}
           </div>
           <div className="mb-3 w-100">
-            <label htmlFor="phone-input" className="form-label">No Handphone*</label>
-            <input type="text" className="form-control" id="phone-input" placeholder="contoh: +628123456789" name="noHP" onChange={formik.handleChange} value={formik.values.noHP}/>
-            {formik.touched.noHP && formik.errors.noHP ? (
-              <div className="text-danger">{formik.errors.noHP}</div>
+            <label htmlFor="phoneNumber" className="form-label">No Handphone*</label>
+            <input type="text" className="form-control" id="phoneNumber" name="phoneNumber" placeholder="+6281252443255" onChange={formik.handleChange} value={formik.values.phoneNumber}/>
+            {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
+              <div className="text-danger">{formik.errors.phoneNumber}</div>
             ) : null}
           </div>
           <button className="btn btn-primary w-100" type="submit">Simpan</button>

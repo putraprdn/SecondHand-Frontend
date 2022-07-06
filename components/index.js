@@ -10,5 +10,6 @@ import LayoutDaftarJual from './Layout-daftar-jual'
 import CardProduct from './Layout-daftar-jual/card-product'
 import NotFound from './Layout-daftar-jual/Not-found';
 import HeaderBar from './header'
+import LoadingAnimation from './LoadingAnimation'
 
-export { NavBar, FormEdit, ProductCarousal, ProductDesc, CardPrice, SellerCardProfile, CardBuy, ModalTawar, LayoutDaftarJual, CardProduct, NotFound, HeaderBar }
+export { NavBar, FormEdit, ProductCarousal, ProductDesc, CardPrice, SellerCardProfile, CardBuy, ModalTawar, LayoutDaftarJual, CardProduct, NotFound, HeaderBar, LoadingAnimation }

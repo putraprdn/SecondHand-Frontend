@@ -3,7 +3,8 @@ import axios from "axios";
 const api = axios.create({
     baseURL: "https://pa-be-k3.herokuapp.com/api",
     headers: {
-        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         Accept : "application/json"
     },
     timeout: 10000,
@@ -16,6 +17,10 @@ export function getRequest(URL) {
 
 export function postRequest(URL, payload) {
   return api.post(`/${URL}`, payload).then(response => response);
+}
+
+export function putRequest(URL, payload) {
+  return api.put(`/${URL}`, payload).then(response => response);
 }
 
 export function patchRequest(URL, payload) {

@@ -8,10 +8,17 @@ const IconButton = () => {
   const router = useRouter()
   const path = ['list', 'diminati', 'terjual']
 
-  const logout = () => {
+  const onlogout = () => {
     localStorage.removeItem('token')
-    router.push('/auth/login')
+    router.push('/')
   }
+
+  const onEdit= () => {
+    router.push({
+      pathname: '/profile/edit'
+    })
+  }
+  
   return (
     <>
         <li className="nav-item me-3">
@@ -33,9 +40,11 @@ const IconButton = () => {
             <User />
           </a>
           <ul className="dropdown-menu dropdown-menu-end position-absolute rounded-16" aria-labelledby="navbarDropdown">
-            <li><Link  href="/profile/edit"><a className="dropdown-item"><User className="me-2"/> Edit</a></Link></li>
             <li>
-                <a className="mb-1 dropdown-item text-danger" onClick={() => logout()} style={{cursor:"pointer"}}><LogOut className="me-2"/> Log Out</a>
+              <a className="dropdown-item" onClick={() => onEdit()} style={{cursor:"pointer"}}><User className="me-2"/> Edit</a>
+            </li>
+            <li>
+                <a className="mb-1 dropdown-item text-danger" onClick={() => onlogout()} style={{cursor:"pointer"}}><LogOut className="me-2"/> Log Out</a>
             </li>
           </ul>
         </li>    

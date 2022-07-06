@@ -3,15 +3,24 @@ import Image from "next/image";
 import styles from "../../../styles/Auth.module.css";
 import googleImage from "../../../public/images/google.png";
 import facebookImage from "../../../public/images/facebook.png";
+import { useState } from "react";
+import { LoadingAnimation } from "../../../components";
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/router';
 import { postRequest } from '../../api/apiConfig';
 
+import { useDispatch } from 'react-redux'
+import { login } from '../../../redux/slices/userSilce'
+
 export default function Login() {
 
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const [onLoading, setOnLoading] = useState(false);
+  const [msg, setMsg] = useState('');
 
   const formik = useFormik({
     initialValues: {
@@ -27,17 +36,31 @@ export default function Login() {
     }),
     onSubmit: values => {
       onLogin(values)
+      setOnLoading(true)
     },
   })
 
   const onLogin = async (values) => {
       try {
-        const login = await postRequest('user/login', values)
-        localStorage.setItem('token', `Bearer ${login.data.token}`)
-        console.log(login.data);
+        const user = await postRequest('user/login', values, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        localStorage.setItem('token', `Bearer ${user.data.token}`)
+        dispatch(login({
+          uid : user.data.data.id,
+          name : user.data.data.name,
+          email : user.data.data.email,
+          image : user.data.data.image,
+          city : user.data.data.city,
+          address : user.data.data.address,
+          phone : user.data.data.phoneNumber,
+        }))
         router.push('/dashboard')
       } catch (error) {
-        console.log(error.response.data.message);
+        setMsg(error.response?.data?.message)
+        setOnLoading(false)
       }
   }
 
@@ -58,6 +81,12 @@ export default function Login() {
         <div className={styles.flexRight}>
           <div className={styles.card}>
             <p className={styles.head}>Masuk</p>
+            {msg ? 
+            <div className="text-center alert alert-danger alert-dismissible fade show" role="alert" >
+              <strong className="text-center">{msg}</strong>
+              <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div> 
+            : null}
             <div className={styles.input}>
               <form onSubmit={formik.handleSubmit}>
                 <div className="mb-2">
@@ -92,9 +121,11 @@ export default function Login() {
                 <p className={styles.forget}>
                   <a href="forget-password">Lupa password?</a>
                 </p>
+                {onLoading ? <LoadingAnimation /> : 
                 <button type="submit" className={styles.button}>
                   Masuk
                 </button>
+                }
               </form>
             </div>
             <div className={styles.line}>
