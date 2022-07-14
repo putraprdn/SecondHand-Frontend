@@ -41,17 +41,17 @@ export default function Register() {
   })
 
   const onRegister = async (values) => {
-      try {
-        const { name : thisName, email : thisEmail, password: thisPassword} = values
-        await postRequest('user/register', {
-          name : thisName,
-          email : thisEmail,
-          password: thisPassword
-        }, 1000)
-        router.push('/auth/login')
-      } catch (error) {
-        console.log(error.response.data.message);
-      }
+    try {
+      const { name: thisName, email: thisEmail, password: thisPassword } = values
+      await postRequest('user/register', {
+        name: thisName,
+        email: thisEmail,
+        password: thisPassword
+      }, 1000)
+      router.push('/auth/login')
+    } catch (error) {
+      console.log(error.response.data.message);
+    }
   }
 
   return (
@@ -75,17 +75,17 @@ export default function Register() {
               <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="name">Nama</label>
-                  <input 
-                    type="name" 
-                    id="name" 
+                  <input
+                    type="name"
+                    id="name"
                     placeholder="Nama Lengkap"
                     name="name"
                     onChange={formik.handleChange}
                     value={formik.values.name}
                   />
-                    {formik.touched.name && formik.errors.name ? (  
-                      <div className="text-danger">{formik.errors.name}</div>
-                    ) : null}
+                  {formik.touched.name && formik.errors.name ? (
+                    <div className="text-danger">{formik.errors.name}</div>
+                  ) : null}
                 </div>
                 <div className="mb-3">
                   <label htmlFor="email">Email</label>
@@ -97,9 +97,9 @@ export default function Register() {
                     onChange={formik.handleChange}
                     value={formik.values.email}
                   />
-                    {formik.touched.email && formik.errors.email ? (
-                      <div className="text-danger">{formik.errors.email}</div>
-                    ) : null}
+                  {formik.touched.email && formik.errors.email ? (
+                    <div className="text-danger">{formik.errors.email}</div>
+                  ) : null}
                 </div>
                 <div className="mb-3">
                   <label htmlFor="password">Password</label>
@@ -114,8 +114,8 @@ export default function Register() {
                   <p className="mb-0">Gunakan minimal 8 karakter dengan campuran huruf, angka {'&'} simbol</p>
 
                   {formik.touched.password && formik.errors.password ? (
-                      <div className="text-danger">{formik.errors.password}</div>
-                    ) : null}
+                    <div className="text-danger">{formik.errors.password}</div>
+                  ) : null}
                 </div>
                 <div className="mb-3">
                   <label htmlFor="confirmPassword">Konfirmasi Password</label>
@@ -128,13 +128,13 @@ export default function Register() {
                     value={formik.values.confirmPassword}
                   />
                   {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-                      <div className="text-danger">{formik.errors.confirmPassword}</div>
-                    ) : null}
+                    <div className="text-danger">{formik.errors.confirmPassword}</div>
+                  ) : null}
                 </div>
                 <button type="submit" className={styles.button}>
                   Daftar
                 </button>
-              </form>            
+              </form>
             </div>
             <p className={styles.footer}>
               Sudah punya akun? <a href="login">Masuk disini</a>

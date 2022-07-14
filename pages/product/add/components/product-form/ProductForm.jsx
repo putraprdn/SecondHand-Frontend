@@ -4,8 +4,35 @@ import { Plus } from "react-feather"
 import { useFilePicker } from 'use-file-picker';
 import Link from "next/link";
 
-const ProductForm = () => {
-    const [Images, setImages] = useState([]);
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+
+const LoadingBox = () => {
+    return (
+        <div className="col-2">
+            <div className="btn position-relative border border-2 border-dark br-10" style={{ width: "90px", height: "90px" }}>
+                <div className="position-absolute top-50 start-50 translate-middle">
+                    <div className="col-2">Loading...</div>
+                </div>
+            </div>
+        </div>
+    )
+}
+const ErrorBox = () => {
+    return (
+        <div className="col-2">
+            <div className="btn position-relative border border-2 border-dark br-10" style={{ width: "90px", height: "90px" }}>
+                <div className="position-absolute top-50 start-50 translate-middle">
+                    <div className="col-2">Error</div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const ProductForm = ({ setProduct, setImages, storeProduct, images }) => {
+
     const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
         readAs: 'DataURL',
         accept: 'image/*',
@@ -21,50 +48,105 @@ const ProductForm = () => {
         },
     });
 
+    const [form, setForm] = useState({})
+    const [price, setPrice] = useState(0)
+    const formData = new FormData();
+
+    const addData = async () => {
+        await filesContent.map((file, index) => {
+            formData.set("image", file.content);
+        })
+
+        await formData.set("name", form.name);
+        await formData.set("price", form.price);
+        await formData.set("categoryId", form.categoryId);
+        await formData.set("description", form.description);
+
+        // console.log(form.name);
+        // console.log(form.price);
+        // console.log(form.categoryId);
+        // console.log(formData);
+    }
+
     return (
         <div className="col-6 mb-5">
             <form>
                 <div>
                     <div className="mb-3">
-                        <label htmlFor="txt_nama" className="form-label">Nama Produk</label>
-                        <input type="text" className="form-control br-10" id="txt_nama" name="txt_nama" placeholder="Nama Produk" />
+                        <label htmlFor="name" className="form-label">Nama Produk</label>
+                        <input
+                            type="text"
+                            className="form-control br-10"
+                            id="name" name="name"
+                            placeholder="Nama Produk"
+                            onChange={(e) => setForm({
+                                ...form,
+                                name: e.target.value
+                            })}
+                        />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="txt_harga" className="form-label">Harga Produk</label>
-                        <input type="text" className="form-control br-10" id="txt_harga" name="txt_harga" placeholder={currencyFormat(0)} />
+                        <label htmlFor="price" className="form-label">Harga Produk</label>
+                        <input
+                            type="number"
+                            className="form-control br-10"
+                            id="price"
+                            name="price"
+                            placeholder={currencyFormat(0)}
+                            onChange={(e) => setForm({
+                                ...form,
+                                price: e.target.value
+                            })}
+                        // value={() => currencyFormat(price)}
+                        />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="cb_kategori" className="form-label">Kategori</label>
-                        <select name="cb_kategori" id="cb_kategori" className="form-control br-10">
-                            <option selected>-- Pilih Kategori --</option>
-                            <option value="Hobi">Hobi</option>
-                            <option value="Kendaraan">Kendaraan</option>
-                            <option value="Baju">Baju</option>
-                            <option value="Elektronik">Elektronik</option>
-                            <option value="Kesehatan">Kesehatan</option>
+                        <label htmlFor="categoryId" className="form-label">Kategori</label>
+                        <select id="categoryId" className="form-control br-10" defaultValue="0" onClick={(e) => setForm({
+                            ...form,
+                            categoryId: e.target.value
+                        })}>
+                            <option value="0">-- Pilih Kategori --</option>
+                            <option name="categoryId" value="1" >Hobi</option>
+                            <option name="categoryId" value="2" >Kendaraan</option>
+                            <option name="categoryId" value="3" >Baju</option>
+                            <option name="categoryId" value="4" >Elektronik</option>
+                            <option name="categoryId" value="5" >Kesehatan</option>
                         </select>
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="txt_deskripsi" className="form-label">Deskripsi</label>
-                        <textarea className="form-control br-10" id="txt_deskripsi" rows={3} defaultValue={""} placeholder="Contoh : Jalan Ikan Hiu 33" />
+                        <label htmlFor="description" className="form-label">Deskripsi</label>
+                        <textarea
+                            className="form-control br-10"
+                            id="description"
+                            rows={3}
+                            defaultValue={""}
+                            placeholder="Contoh : Jalan Ikan Hiu 33" onChange={(e) => setForm({
+                                ...form,
+                                description: e.target.value
+                            })}
+                        />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="fl_image" className="form-label">Foto Produk</label>
                         <div className="row row-cols-1 row-cols-md-5 g-3">
                             {
-                                filesContent.map((file, index) => (
-                                    <div className="col-2" key={index}>
-                                        <div className="btn position-relative border border-2 border-dark br-10" style={{ width: "90px", height: "90px" }} onClick={() => openFileSelector()}>
-                                            <div className="position-absolute top-50 start-50 translate-middle">
-                                                <img alt={file.name} src={file.content} width={'90px'} height={"90px"} className="br-10"></img>
+                                filesContent.map((file, index) => {
+                                    // console.log(filesContent);
+                                    return (
+                                        <div className="col-2" key={index}>
+                                            <div className="btn position-relative border border-2 border-dark br-10" style={{ width: "90px", height: "90px" }} onClick={() => openFileSelector()}>
+                                                <div className="position-absolute top-50 start-50 translate-middle">
+                                                    <img alt={file.name} src={file.content} width={'90px'} height={"90px"} className="br-10"></img>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))
+                                    )
+                                })
                             }
 
                             {
-                                loading ? <div className="col-2">Loading...</div> : errors.length ? <div className="col-2">Error...</div> : <div className="col-2" hidden></div>
+                                loading ? <LoadingBox /> : errors.length ? <ErrorBox /> : <div className="col-2" hidden></div>
                             }
                             <div className="col-2">
                                 <div className="btn position-relative border border-2 br-10" style={{ width: "90px", height: "90px" }} onClick={() => openFileSelector()}>
@@ -79,10 +161,18 @@ const ProductForm = () => {
 
                 <div className="row">
                     <div className="col">
-                        <Link href="/product/add/preview"><button type="submit" className="btn btn-outline-primary w-100">Preview</button></Link>
+                        <Link href="/product/add/preview"><button type="button" className="btn btn-outline-primary w-100">Preview</button></Link>
                     </div>
                     <div className="col">
-                        <button type="submit" className="btn btn-primary w-100">Terbitkan</button>
+                        <button type="button" className="btn btn-primary w-100" onClick={
+                            () => {
+                                addData().then((_) => {
+                                    storeProduct(formData);
+                                }).catch((err) => {
+                                    console.log(err);
+                                });
+                            }
+                        }>Terbitkan</button>
                     </div>
                 </div>
             </form >

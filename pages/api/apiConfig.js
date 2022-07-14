@@ -1,14 +1,14 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://pa-be-k3.herokuapp.com/api",
-    headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        Accept : "application/json"
-    },
-    timeout: 10000,
-    withCreditentials: true
+  baseURL: "https://pa-be-k3.herokuapp.com/api",
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+    Accept: "application/json"
+  },
+  timeout: 10000,
+  withCreditentials: true
 })
 
 export function getRequest(URL) {

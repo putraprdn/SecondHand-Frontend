@@ -11,7 +11,7 @@ const NavBar = () => {
                         <Logo />
                     </div>
                     <div>
-                        <SearchEngine />
+                        <SearchEngine />asdasdasd
                     </div>
                 </div>
                 <LoginButton />
