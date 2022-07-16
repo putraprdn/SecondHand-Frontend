@@ -35,6 +35,7 @@ export default function Login() {
         .required('Password harus diisi'),
     }),
     onSubmit: values => {
+      setMsg('');
       onLogin(values)
       setOnLoading(true)
     },
@@ -57,12 +58,13 @@ export default function Login() {
           address : user.data.data.address,
           phone : user.data.data.phoneNumber,
         }))
+
         router.push('/dashboard')
       } catch (error) {
         setMsg(error.response?.data?.message)
         setOnLoading(false)
       }
-  }
+  }  
 
   return (
     <div className={styles.container}>
@@ -80,13 +82,12 @@ export default function Login() {
         </div>
         <div className={styles.flexRight}>
           <div className={styles.card}>
-            <p className={styles.head}>Masuk</p>
             {msg ? 
-            <div className="text-center alert alert-danger alert-dismissible fade show" role="alert" >
-              <strong className="text-center">{msg}</strong>
-              <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div> 
+              <div className="text-center alert alert-danger" role="alert">
+                <strong>{msg}</strong>
+              </div>
             : null}
+            <p className={styles.head}>Masuk</p>
             <div className={styles.input}>
               <form onSubmit={formik.handleSubmit}>
                 <div className="mb-2">

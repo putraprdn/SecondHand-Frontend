@@ -8,7 +8,7 @@ import { selectUser } from "../../redux/slices/userSilce";
 
 const LayoutDaftarJual = ({children}) => {
 
-    const userPID = useSelector(selectUser)
+  const userPID = useSelector(selectUser)
 
   return (
     <Fragment>

@@ -2,30 +2,32 @@
 import styles from '../../styles/SellerCardProfile.module.css'
 import { useState, useEffect } from 'react'
 
-const SellerCardProfile = ({user}) => {
+const SellerCardProfile = ({ user }) => {
 
   const [userDetail, setuserDetail] = useState({
     image : '/profile_default.png',
     name : 'user',
     city : 'city'
   })
-  const [scr, setScr] = useState('/profile_default.png')
 
   const getUserDetail = (v) => {
-    setuserDetail(v)
-    setScr(v.image)
+    setuserDetail({
+      image : v?.image,
+      name : v?.name,
+      city : v?.city
+    })
   }
 
   useEffect(() => {
     getUserDetail(user)
-  }, )
+  }, [user])
 
   return (
     <div className='card'>
         <div className="d-flex flex-row align-items-center">
           <div className="p-3">
             <div>
-              <img src={scr} alt="profile" className={styles.img_rounded} />
+              <img src={userDetail?.image == null ? '/profile_default.png' : userDetail.image } alt="profile" className={styles.img_rounded} />
             </div>  
           </div>
           <div className="flex-grow-1">

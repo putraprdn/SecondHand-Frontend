@@ -1,12 +1,33 @@
 import { CardProduct, LayoutDaftarJual } from "../../../components"
 import { useRouter } from "next/router"
 import { Plus } from "react-feather"
+import { useEffect, useState } from "react"
+import { getRequest } from "../../api/apiConfig"
+import { filterProductByAvailable, filterProductByName } from "../../../services/filterProduct"
+
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/slices/userSilce";
 
 const List = () => {
+
+  const userData = useSelector(selectUser)
     
-    const router = useRouter()
-    const { name } = router.query
-    console.log(name);
+  const router = useRouter()
+  const [product, setProduct] = useState()
+
+  const getProductData = async () => {
+    try {
+      const res = await getRequest('product/list')
+      const productFilter = filterProductByName(filterProductByAvailable(res.data.data), userData.email)
+      setProduct(productFilter)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getProductData()
+  })
 
   return (
     <LayoutDaftarJual>
@@ -19,10 +40,19 @@ const List = () => {
                 </div>
             </div>
         </div>
-        <CardProduct />
+        {
+          product && product.map((item, index) => {
+            return (
+              <div className="col-xl-3 col-md-4 col-lg-4 col-sm-6 col-xs-6" key={index}>
+                <CardProduct product={item} />
+              </div>
+            )
+          })
+        }
       </div>
     </LayoutDaftarJual>
   )
 }
+
 
 export default List

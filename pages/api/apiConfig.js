@@ -7,7 +7,6 @@ const api = axios.create({
         "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
         Accept : "application/json"
     },
-    timeout: 10000,
     withCreditentials: true
 })
 

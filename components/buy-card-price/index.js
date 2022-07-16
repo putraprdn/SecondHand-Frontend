@@ -1,19 +1,9 @@
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
-const CardBuy = ({seller}) => {
+const CardBuy = ({isSeller}) => {
 
   // const router = useRouter()
-  const [data, setData] = useState({})
-
-  const getDataSeller = (seller) => {
-    setData(seller)
-  }
-
-  useEffect(() => {
-    getDataSeller(seller)
-    console.log(data);
-  })
 
   return (
     <div className='card'>
@@ -22,7 +12,7 @@ const CardBuy = ({seller}) => {
         <h6 className="card-subtitle mb-3 text-muted">Aksesoris</h6>
         <p className="card-text fs-5 fw-400">Rp. 100.000</p>
         <div className="d-grid gap-2">
-          {data.foo ? 
+          {isSeller ? 
             <button className="btn btn-outline-primary fw-500">Edit</button>
           : 
             <button className="btn btn-primary fw-500" type="button" data-bs-toggle="modal" data-bs-target="#modalTawar">Saya tertarik dan ingin nego</button>

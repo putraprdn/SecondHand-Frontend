@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 // import required modules
 import { Pagination, Navigation } from "swiper";
 
-const ProductCarousal = () => {
+const ProductCarousal = ({ isProduct }) => {
   return (
     <>
       <Swiper

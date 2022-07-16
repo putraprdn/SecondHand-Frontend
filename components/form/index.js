@@ -9,9 +9,12 @@ import { ArrowLeft } from "react-feather";
 
 import { checkToken } from './../../services/Token';
 
+import { useDispatch } from 'react-redux'
+import { edit } from '../../redux/slices/userSilce'
 const FormEdit = () => {
   
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const [srci, setSrc] = useState('/uploadimg.svg')
   const [province, setProvince] = useState([])
@@ -109,7 +112,15 @@ const FormEdit = () => {
             }
         })
 
-        console.log(res.data);
+        // console.log(res.data.data.name);
+        dispatch(edit({
+          uid: res.data.data.id,
+          name: res.data.data.name,
+          city: res.data.data.city,
+          address: res.data.data.address,
+          phone: res.data.data.phoneNumber,
+          image: res.data.data.image
+        }))
 
         router.push('/dashboard')
 
