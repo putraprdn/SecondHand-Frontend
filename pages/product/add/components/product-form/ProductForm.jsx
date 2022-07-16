@@ -53,11 +53,6 @@ const ProductForm = ({ setProduct, setImages, storeProduct, images }) => {
     const [form, setForm] = useState({})
     const [price, setPrice] = useState(0)
     var formData = new FormData();
-    // const [selectedFile, setSelectedFile] = useState(null);
-
-    // const handleFileSelect = (event) => {
-    //     setSelectedFile(event.target.files[0])
-    // }
 
     const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
         const byteCharacters = atob(b64Data);
@@ -80,43 +75,15 @@ const ProductForm = ({ setProduct, setImages, storeProduct, images }) => {
     }
 
     const addData = async () => {
-        const str2blob = txt => new Blob([txt]);
-        await filesContent.map((file, index) => {
-            // fetch(file.content)
-            //     .then(res => formData.append("image", res.blob(), file.name))
-            //     .then(console.log)
-            // formData.append("image", str2blob(file.content));
+        await filesContent.map((file, _) => {
 
             const blob = file.content.substring(5, 14) == 'image/png' ? b64toBlob(file.content.substring(22), file.content.substring(5, 14)) : b64toBlob(file.content.substring(23), file.content.substring(5, 15));
             formData.append("image", blob, file.name)
         })
-
-        // await filesContent.map((file, index) => {
-        //     formData.append("image", {
-        //         // data: response.data,
-        //         uri: file.content,
-        //         name: file.name,
-        //         type: 'image/png'
-        //     });
-        //
-
-
-        // await formData.append("image", selectedFile);
-        // await formData.append("image", str2blob(img_fb), "asas");
         formData.append("name", form.name);
         formData.append("description", form.description);
         formData.append("price", form.price);
         formData.append("categoryId", form.categoryId);
-
-        // console.log(form.name);
-        // console.log(form.price);
-        // console.log(form.categoryId);
-        // console.log(formData);
-
-        // console.log(filesContent[0].content.substring(22));
-        // console.log(filesContent[0].content.substring(5, 14));
-        // console.log(filesContent[0].content);
-        // console.log(str2blob(filesContent[0].content));
     }
 
     return (
@@ -165,8 +132,6 @@ const ProductForm = ({ setProduct, setImages, storeProduct, images }) => {
                             <option name="categoryId" value="5" >Kesehatan</option>
                         </select>
                     </div>
-                    {/* <input type="file" onchange={handleFileSelect} /> */}
-
                     <div className="mb-3">
                         <label htmlFor="description" className="form-label">Deskripsi</label>
                         <textarea
