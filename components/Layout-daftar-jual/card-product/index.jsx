@@ -38,7 +38,7 @@ const CardProduct = ({product}) => {
        }}>
         <div className="card-product d-flex flex-column">
            <div>
-               <img className={styles['product-img']} src={productData.images[0].image} alt="product-img"/>
+               <img className={styles['product-img']} src={productData?.images[0]?.image} alt="product-img"/>
            </div>
            <div className="product-name mt-2">
                <h5 className="mb-1 fw-semibold">{productData.name}</h5>

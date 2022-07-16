@@ -104,6 +104,10 @@ const FormEdit = () => {
         form.append('phoneNumber', values.phoneNumber);
         form.append('image', imageUser);
 
+        for (const value of form.values()) {
+          console.log(value);
+      };
+
         const res = await axios.put(`https://pa-be-k3.herokuapp.com/api/user/update/${isLoggedIn}`, 
           form, {
             headers: {

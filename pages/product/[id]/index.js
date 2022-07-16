@@ -1,10 +1,10 @@
-import { ProductCarousal, NavBar, ProductDesc, SellerCardProfile, CardBuy } from '../../components'
-import { ModalTawar } from '../../components'
-import { getRequest } from '../api/apiConfig'
+import { ProductCarousal, NavBar, ProductDesc, SellerCardProfile, CardBuy } from '../../../components'
+import { ModalTawar } from '../../../components'
+import { getRequest } from '../../api/apiConfig'
 import { useState, useEffect } from 'react'
 
 import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/slices/userSilce";
+import { selectUser } from "../../../redux/slices/userSilce";
 
 const DetailProduct = ({ product }) => {
     
