@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import img_fb from '../../../../../public/images/facebook.png'
+
 
 const LoadingBox = () => {
     return (
@@ -50,22 +52,71 @@ const ProductForm = ({ setProduct, setImages, storeProduct, images }) => {
 
     const [form, setForm] = useState({})
     const [price, setPrice] = useState(0)
-    const formData = new FormData();
+    var formData = new FormData();
+    // const [selectedFile, setSelectedFile] = useState(null);
+
+    // const handleFileSelect = (event) => {
+    //     setSelectedFile(event.target.files[0])
+    // }
+
+    const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+        const byteCharacters = atob(b64Data);
+        const byteArrays = [];
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+
+        const blob = new Blob(byteArrays, { type: contentType });
+        return blob;
+    }
 
     const addData = async () => {
+        const str2blob = txt => new Blob([txt]);
         await filesContent.map((file, index) => {
-            formData.set("image", file.content);
+            // fetch(file.content)
+            //     .then(res => formData.append("image", res.blob(), file.name))
+            //     .then(console.log)
+            // formData.append("image", str2blob(file.content));
+
+            const blob = file.content.substring(5, 14) == 'image/png' ? b64toBlob(file.content.substring(22), file.content.substring(5, 14)) : b64toBlob(file.content.substring(23), file.content.substring(5, 15));
+            formData.append("image", blob, file.name)
         })
 
-        await formData.set("name", form.name);
-        await formData.set("price", form.price);
-        await formData.set("categoryId", form.categoryId);
-        await formData.set("description", form.description);
+        // await filesContent.map((file, index) => {
+        //     formData.append("image", {
+        //         // data: response.data,
+        //         uri: file.content,
+        //         name: file.name,
+        //         type: 'image/png'
+        //     });
+        //
+
+
+        // await formData.append("image", selectedFile);
+        // await formData.append("image", str2blob(img_fb), "asas");
+        formData.append("name", form.name);
+        formData.append("description", form.description);
+        formData.append("price", form.price);
+        formData.append("categoryId", form.categoryId);
 
         // console.log(form.name);
         // console.log(form.price);
         // console.log(form.categoryId);
         // console.log(formData);
+
+        // console.log(filesContent[0].content.substring(22));
+        // console.log(filesContent[0].content.substring(5, 14));
+        // console.log(filesContent[0].content);
+        // console.log(str2blob(filesContent[0].content));
     }
 
     return (
@@ -114,6 +165,8 @@ const ProductForm = ({ setProduct, setImages, storeProduct, images }) => {
                             <option name="categoryId" value="5" >Kesehatan</option>
                         </select>
                     </div>
+                    {/* <input type="file" onchange={handleFileSelect} /> */}
+
                     <div className="mb-3">
                         <label htmlFor="description" className="form-label">Deskripsi</label>
                         <textarea
