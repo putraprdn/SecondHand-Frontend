@@ -12,10 +12,11 @@ const SellerCardProfile = ({ user }) => {
 
   const getUserDetail = (v) => {
     setuserDetail({
-      image : v?.image,
+      image : v === null ? '/profile_default.png' : v.image,
       name : v?.name,
       city : v?.city
     })
+    
   }
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const SellerCardProfile = ({ user }) => {
         <div className="d-flex flex-row align-items-center">
           <div className="p-3">
             <div>
-              <img src={userDetail?.image == null ? '/profile_default.png' : userDetail.image } alt="profile" className={styles.img_rounded} />
+              <img src={userDetail?.image == null ? '/profile_default.png' : userDetail.image } alt="profile" className={styles.img_rounded} referrerPolicy="no-referrer"/>
             </div>  
           </div>
           <div className="flex-grow-1">

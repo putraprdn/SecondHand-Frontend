@@ -30,8 +30,8 @@ const DetailProduct = ({ product }) => {
                     <ProductCarousal isProduct={product.images}/>
                 </div>
                 <div className='col-lg-4 col-md-5'>
-                    <CardBuy isSeller={seller}/>
-                    <SellerCardProfile />
+                    <CardBuy isSeller={seller} isProduct={product} />
+                    <SellerCardProfile user={product.seller}/>
                 </div>
             </div>
             <div className='row justify-content-md-center'>

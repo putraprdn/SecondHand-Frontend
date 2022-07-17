@@ -104,10 +104,6 @@ const FormEdit = () => {
         form.append('phoneNumber', values.phoneNumber);
         form.append('image', imageUser);
 
-        for (const value of form.values()) {
-          console.log(value);
-      };
-
         const res = await axios.put(`https://pa-be-k3.herokuapp.com/api/user/update/${isLoggedIn}`, 
           form, {
             headers: {
@@ -116,14 +112,13 @@ const FormEdit = () => {
             }
         })
 
-        // console.log(res.data.data.name);
         dispatch(edit({
-          uid: res.data.data.id,
           name: res.data.data.name,
-          city: res.data.data.city,
-          address: res.data.data.address,
-          phone: res.data.data.phoneNumber,
-          image: res.data.data.image
+          email:  res.data.data.email,
+          city:  res.data.data.city,
+          address:  res.data.data.address,
+          phoneNumber:  res.data.data.phoneNumber,
+          image: res.data.data.image,
         }))
 
         router.push('/dashboard')

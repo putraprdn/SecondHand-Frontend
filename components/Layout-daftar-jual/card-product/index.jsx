@@ -29,12 +29,11 @@ const CardProduct = ({product}) => {
   return (
     <div 
        className="p-2 border border-2 box-shadow" 
-       style={{ width: "100%", height: "230px" }} 
+       style={{ width: "100%", height: "230px", cursor:"pointer" }} 
        onClick={() => {
            router.push({
-               pathname: '/product/[id]',
-               query: {id : 1}
-           }, 'product')
+               pathname: `/product/${productData.id}`,
+           })
        }}>
         <div className="card-product d-flex flex-column">
            <div>
