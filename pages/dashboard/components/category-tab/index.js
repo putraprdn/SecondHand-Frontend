@@ -11,7 +11,7 @@ const CategoryTab = ({ categories }) => {
             {
                 categories.map((category, index) => {
                     return (
-                        <ButtonCategory buttonText={category.name} buttonMain={butIndex == category.id ? true : false} buttonValue={category.id} setButIndex={setButIndex} />
+                        <ButtonCategory key={index} buttonText={category.name} buttonMain={butIndex == category.id ? true : false} buttonValue={category.id} setButIndex={setButIndex} />
                     )
                 })
             }

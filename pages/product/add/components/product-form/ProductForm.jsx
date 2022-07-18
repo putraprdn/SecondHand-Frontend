@@ -189,7 +189,7 @@ const ProductForm = ({ storeProduct, categories }) => {
                                 loading ? <LoadingBox /> : errors.length ? <ErrorBox /> : <div className="col-2" hidden></div>
                             }
                             <div className="col-2">
-                                <div className="btn position-relative border border-2 br-10" style={{ width: "90px", height: "90px" }} onClick={() => openFileSelector()}>
+                                <div className="btn position-relative border border-2  border-dashed br-10" style={{ width: "90px", height: "90px" }} onClick={() => openFileSelector()}>
                                     <div className="position-absolute top-50 start-50 translate-middle">
                                         <Plus size={20} color="grey" />
                                     </div>
