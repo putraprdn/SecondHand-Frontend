@@ -3,12 +3,7 @@ import currencyFormat from "../../../../dashboard/service/currency";
 import { Plus } from "react-feather"
 import { useFilePicker } from 'use-file-picker';
 import Link from "next/link";
-
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-
-import img_fb from '../../../../../public/images/facebook.png'
-
+import Router from "next/router";
 
 const LoadingBox = () => {
     return (
@@ -33,7 +28,7 @@ const ErrorBox = () => {
     )
 }
 
-const ProductForm = ({ setProduct, setImages, storeProduct, images }) => {
+const ProductForm = ({ storeProduct, categories }) => {
 
     const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
         readAs: 'DataURL',
@@ -50,8 +45,12 @@ const ProductForm = ({ setProduct, setImages, storeProduct, images }) => {
         },
     });
 
-    const [form, setForm] = useState({})
-    const [price, setPrice] = useState(0)
+    const [form, setForm] = useState({
+        name: "",
+        description: "",
+        price: 0,
+        categoryId: 0
+    })
     var formData = new FormData();
 
     const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
@@ -76,14 +75,37 @@ const ProductForm = ({ setProduct, setImages, storeProduct, images }) => {
 
     const addData = async () => {
         await filesContent.map((file, _) => {
+            const blob = file.content.substring(5, 14) == 'image/png' || file.content.substring(5, 14) == 'image/jpg' ? b64toBlob(file.content.substring(22), file.content.substring(5, 14)) : b64toBlob(file.content.substring(23), file.content.substring(5, 15));
 
-            const blob = file.content.substring(5, 14) == 'image/png' ? b64toBlob(file.content.substring(22), file.content.substring(5, 14)) : b64toBlob(file.content.substring(23), file.content.substring(5, 15));
             formData.append("image", blob, file.name)
         })
+
         formData.append("name", form.name);
         formData.append("description", form.description);
         formData.append("price", form.price);
         formData.append("categoryId", form.categoryId);
+    }
+
+    const verivyData = () => {
+        if (form.name === "") {
+            alert("Nama produk belum diisi")
+        } else if (form.description === "") {
+            alert("Deskripsi produk belum diisi")
+        } else if (form.price === 0) {
+            alert("Harga produk belum diisi")
+        } else if (form.categoryId === 0) {
+            alert("Kategori produk belum diisi")
+        } else if (filesContent === []) {
+            alert("Gambar produk belum diisi")
+        } else {
+            addData().then((_) => {
+                storeProduct(formData).then(() => {
+                    Router.reload()
+                });
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
     }
 
     return (
@@ -125,11 +147,11 @@ const ProductForm = ({ setProduct, setImages, storeProduct, images }) => {
                             categoryId: e.target.value
                         })}>
                             <option value="0">-- Pilih Kategori --</option>
-                            <option name="categoryId" value="1" >Hobi</option>
-                            <option name="categoryId" value="2" >Kendaraan</option>
-                            <option name="categoryId" value="3" >Baju</option>
-                            <option name="categoryId" value="4" >Elektronik</option>
-                            <option name="categoryId" value="5" >Kesehatan</option>
+                            {categories.map((category, index) => {
+                                return (
+                                    <option key={category.id} value={category.id} >{category.name}</option>
+                                )
+                            })}
                         </select>
                     </div>
                     <div className="mb-3">
@@ -184,11 +206,7 @@ const ProductForm = ({ setProduct, setImages, storeProduct, images }) => {
                     <div className="col">
                         <button type="button" className="btn btn-primary w-100" onClick={
                             () => {
-                                addData().then((_) => {
-                                    storeProduct(formData);
-                                }).catch((err) => {
-                                    console.log(err);
-                                });
+                                verivyData()
                             }
                         }>Terbitkan</button>
                     </div>
