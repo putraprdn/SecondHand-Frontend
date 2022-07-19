@@ -7,6 +7,7 @@ import Head from "next/head";
 
 const AddProduct = () => {
     const [categories, setCategories] = useState([])
+    const [refetch, setRefetch] = useState([]);
 
     const storeProduct = async (form) => {
         try {
@@ -26,6 +27,17 @@ const AddProduct = () => {
             console.log(error)
         }
     }
+    const storeCategory = async (form) => {
+        try {
+            console.log(form);
+            const response = await axios.post('https://pa-be-k3.herokuapp.com/api/category/create', form)
+            setRefetch(response.data.data)
+            console.log(response.data.data);
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const getCategoriesData = async () => {
         try {
@@ -39,7 +51,7 @@ const AddProduct = () => {
 
     useEffect(() => {
         getCategoriesData();
-    }, []);
+    }, [refetch]);
 
     return (
         <div>
@@ -52,7 +64,11 @@ const AddProduct = () => {
             <div className="container">
                 <div className="row justify-content-center">
                     <BackButton />
-                    <ProductForm storeProduct={storeProduct} categories={categories} />
+                    <ProductForm
+                        storeProduct={storeProduct}
+                        categories={categories}
+                        storeCategory={storeCategory}
+                    />
                 </div>
             </div>
         </div>
