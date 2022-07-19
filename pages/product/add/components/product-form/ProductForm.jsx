@@ -4,6 +4,7 @@ import { Plus } from "react-feather"
 import { useFilePicker } from 'use-file-picker';
 import Link from "next/link";
 import Router from "next/router";
+import { LoadingAnimation } from "../../../../../components";
 
 const LoadingBox = () => {
     return (
@@ -51,6 +52,9 @@ const ProductForm = ({ storeProduct, categories }) => {
         price: 0,
         categoryId: 0
     })
+
+    const [onLoading, setOnLoading] = useState(false);
+
     var formData = new FormData();
 
     const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
@@ -99,8 +103,10 @@ const ProductForm = ({ storeProduct, categories }) => {
             alert("Gambar produk belum diisi")
         } else {
             addData().then((_) => {
+                setOnLoading(true)
                 storeProduct(formData).then(() => {
-                    Router.reload()
+                    // Router.reload()
+                    Router.push('/daftar-jual/list')
                 });
             }).catch((err) => {
                 console.log(err);
@@ -199,18 +205,26 @@ const ProductForm = ({ storeProduct, categories }) => {
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col">
-                        <Link href="/product/add/preview"><button type="button" className="btn btn-outline-primary w-100">Preview</button></Link>
-                    </div>
-                    <div className="col">
-                        <button type="button" className="btn btn-primary w-100" onClick={
-                            () => {
-                                verivyData()
-                            }
-                        }>Terbitkan</button>
-                    </div>
-                </div>
+                {
+                    onLoading == true
+                        ? <div className="col position-relative">
+                            <div className="position-absolute top-50 start-50 translate-middle">
+                                <LoadingAnimation />
+                            </div>
+                        </div>
+                        : <div className="row">
+                            <div className="col">
+                                <Link href="/product/add/preview"><button type="button" className="btn btn-outline-primary w-100">Preview</button></Link>
+                            </div>
+                            <div className="col">
+                                <button type="button" className="btn btn-primary w-100" onClick={
+                                    () => {
+                                        verivyData()
+                                    }
+                                }>Terbitkan</button>
+                            </div>
+                        </div>
+                }
             </form >
         </div >
     )
