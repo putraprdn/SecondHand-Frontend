@@ -148,11 +148,11 @@ a:hover{
   /* lighting-color: #4B1979; */
 }
 
-.btn-outline-secondary {
-  /* background-color: #E2D4F0; */
-  color: #4B1979;
-  padding: 8px 18px;
-  border-color: #E2D4F0 !important;
+.btn-outline-secondary-mini {
+  background-color: #4B1979;
+  border-color: #4B1979 !important;
+  color: white;
+  padding: 7px 10px;
   border-radius: 10px 10px 10px 10px;
   -webkit-border-radius: 10px 10px 10px 10px;
   -moz-border-radius: 10px 10px 10px 10px;
@@ -160,11 +160,16 @@ a:hover{
   -o-border-radius: 10px 10px 10px 10px;
 }
 
-.btn-outline-secondary-mini {
-  background-color: #4B1979;
+.btn-outline-secondary-mini:hover {
+  background-color: #6b2ea5;
   border-color: #4B1979 !important;
-  color: white;
-  padding: 7px 10px;
+}
+
+.btn-outline-secondary {
+  /* background-color: #E2D4F0; */
+  color: #4B1979;
+  padding: 8px 18px;
+  border-color: #E2D4F0 !important;
   border-radius: 10px 10px 10px 10px;
   -webkit-border-radius: 10px 10px 10px 10px;
   -moz-border-radius: 10px 10px 10px 10px;

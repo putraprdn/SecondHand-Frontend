@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-const ModalCategory = ({ isOpen, setModal, storeCategory }) => {
+const ModalCategory = ({ isOpen, setModal, storeCategory, toastShow }) => {
 
     const [form, setForm] = useState({
         name: "",
@@ -9,13 +8,15 @@ const ModalCategory = ({ isOpen, setModal, storeCategory }) => {
     })
 
     const verivyData = () => {
-        if (form.name === "") {
-            alert("Nama produk belum diisi")
+        if (form.name === "" && form.description === "") {
+            toastShow("Data kategori belum diisi")
+        } else if (form.name === "") {
+            toastShow("Nama kategori belum diisi")
         } else if (form.description === "") {
-            alert("Deskripsi produk belum diisi")
+            toastShow("Deskripsi kategori belum diisi")
         } else {
             storeCategory(form).then((_) => {
-
+                setModal(false)
             }).catch((err) => {
                 console.log(err);
             });
@@ -25,7 +26,7 @@ const ModalCategory = ({ isOpen, setModal, storeCategory }) => {
     return (
         <Modal
             show={isOpen}
-            size="lg"
+            size="ml"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
@@ -65,7 +66,6 @@ const ModalCategory = ({ isOpen, setModal, storeCategory }) => {
                         </div>
                     </div>
                 </form>
-
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={() => setModal(false)}>Close</Button>

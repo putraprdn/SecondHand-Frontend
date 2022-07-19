@@ -8,6 +8,8 @@ import { LoadingAnimation } from "../../../../../components";
 import ModalCategory from "../modal-category/ModalCategory";
 import LoadingBox from "../loading-box/LoadingBox";
 import ErrorBox from "../error-box/ErrorBox";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductForm = ({ storeProduct, categories, storeCategory }) => {
 
@@ -41,6 +43,10 @@ const ProductForm = ({ storeProduct, categories, storeCategory }) => {
     }
 
     var formData = new FormData();
+
+    var toastShow = (text) => {
+        toast.warn(text.toString())
+    }
 
     const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
         const byteCharacters = atob(b64Data);
@@ -76,16 +82,18 @@ const ProductForm = ({ storeProduct, categories, storeCategory }) => {
     }
 
     const verivyData = () => {
-        if (form.name === "") {
-            alert("Nama produk belum diisi")
+        if (form.name === "" && form.description === "" && form.price === 0 && form.categoryId === 0 && filesContent.length == 0) {
+            toastShow("Data produk belum diisi")
+        } else if (form.name === "") {
+            toastShow("Nama produk belum diisi")
         } else if (form.description === "") {
-            alert("Deskripsi produk belum diisi")
+            toastShow("Deskripsi produk belum diisi")
         } else if (form.price === 0) {
-            alert("Harga produk belum diisi")
+            toastShow("Harga produk belum diisi")
         } else if (form.categoryId === 0) {
-            alert("Kategori produk belum diisi")
-        } else if (filesContent === []) {
-            alert("Gambar produk belum diisi")
+            toastShow("Kategori produk belum diisi")
+        } else if (filesContent.length == 0) {
+            toastShow("Gambar produk belum diisi")
         } else {
             addData().then((_) => {
                 setOnLoading(true)
@@ -220,6 +228,19 @@ const ProductForm = ({ storeProduct, categories, storeCategory }) => {
                 isOpen={isOpen}
                 setModal={setIsOpen}
                 storeCategory={storeCategory}
+                toastShow={toastShow}
+            />
+            <ToastContainer
+                theme="dark"
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
             />
         </div >
     )
