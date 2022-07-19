@@ -1,8 +1,7 @@
 import { useState } from "react";
 import ButtonCategory from "./components/ButtonCategory";
 
-const CategoryTab = ({ categories }) => {
-    const [butIndex, setButIndex] = useState(-1);
+const CategoryTab = ({ categories, butIndex, setButIndex }) => {
 
     return (
         <div className="py-3 d-flex text-nowrap overflow-auto">

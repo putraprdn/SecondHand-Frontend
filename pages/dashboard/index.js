@@ -8,7 +8,10 @@ import ProductList from './components/product-list';
 
 const Dashboard = () => {
     const [product, setProduct] = useState([]);
-    const [categories, setCategories] = useState([])
+    const [categories, setCategories] = useState([]);
+    const [search, setSearch] = useState("");
+    const [butIndex, setButIndex] = useState(-1);
+    // const [refetch, setRefetch] = useState([]);
 
     const getProductData = async () => {
         try {
@@ -40,12 +43,24 @@ const Dashboard = () => {
             <Head>
                 <title>Dashboard</title>
             </Head>
-            <NavBar />
+            <NavBar
+                setSearch={setSearch}
+            // setRefetch={setRefetch}
+            />
             <AdsCarousel />
             <div className="container my-5">
                 <h4>Telusuri Konten</h4>
-                <CategoryTab categories={categories} />
-                <ProductList product={product} categories={categories} />
+                <CategoryTab
+                    categories={categories}
+                    butIndex={butIndex}
+                    setButIndex={setButIndex}
+                />
+                <ProductList
+                    product={product}
+                    categories={categories}
+                    butIndex={butIndex}
+                    search={search}
+                />
             </div>
         </div>
     )

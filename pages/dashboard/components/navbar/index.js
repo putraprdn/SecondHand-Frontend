@@ -4,14 +4,14 @@ import LoginButton from "./components/LoginButton";
 import IconButton from "./components/Icon";
 import { useEffect, useState } from "react";
 
-const NavBar = () => {
+const NavBar = ({ setSearch, setRefetch }) => {
 
     const [isLoggedIn, setIsLoggedIn] = useState([]);
 
-    useEffect(function() {
-       const token = localStorage.getItem('token')
-       setIsLoggedIn(token)
-    },[]);
+    useEffect(function () {
+        const token = localStorage.getItem('token')
+        setIsLoggedIn(token)
+    }, []);
 
     return (
         <nav className="navbar navbar-expand-lg bg-white shadow-sm p-3 mb-lg-5 mb-3 bg-body rounded">
@@ -19,17 +19,17 @@ const NavBar = () => {
                 <div className="navbar-brand align-self-center" href="#">
                     <Logo />
                 </div>
-                <SearchEngine />
-                    <ul className="navbar-nav ms-md-auto flex-sm-row">
-                        {!isLoggedIn ? 
-                            <li className="nav-item">
-                                <LoginButton />    
-                            </li>
-                          :
-                            <IconButton />  
-                        }
-                        
-                    </ul>
+                <SearchEngine setSearch={setSearch} setRefetch={setRefetch} />
+                <ul className="navbar-nav ms-md-auto flex-sm-row">
+                    {!isLoggedIn ?
+                        <li className="nav-item">
+                            <LoginButton />
+                        </li>
+                        :
+                        <IconButton />
+                    }
+
+                </ul>
             </div>
         </nav >
     )
