@@ -5,29 +5,9 @@ import { useFilePicker } from 'use-file-picker';
 import Link from "next/link";
 import Router from "next/router";
 import { LoadingAnimation } from "../../../../../components";
-
-const LoadingBox = () => {
-    return (
-        <div className="col-2">
-            <div className="btn position-relative border border-2 border-dark br-10" style={{ width: "90px", height: "90px" }}>
-                <div className="position-absolute top-50 start-50 translate-middle">
-                    <div className="col-2">Loading...</div>
-                </div>
-            </div>
-        </div>
-    )
-}
-const ErrorBox = () => {
-    return (
-        <div className="col-2">
-            <div className="btn position-relative border border-2 border-dark br-10" style={{ width: "90px", height: "90px" }}>
-                <div className="position-absolute top-50 start-50 translate-middle">
-                    <div className="col-2">Error</div>
-                </div>
-            </div>
-        </div>
-    )
-}
+import ModalCategory from "../modal-category/ModalCategory";
+import LoadingBox from "../loading-box/LoadingBox";
+import ErrorBox from "../error-box/ErrorBox";
 
 const ProductForm = ({ storeProduct, categories }) => {
 
@@ -54,6 +34,11 @@ const ProductForm = ({ storeProduct, categories }) => {
     })
 
     const [onLoading, setOnLoading] = useState(false);
+
+    const [isOpen, setIsOpen] = useState(false)
+    function setModal() {
+        setIsOpen(!isOpen)
+    }
 
     var formData = new FormData();
 
@@ -148,17 +133,22 @@ const ProductForm = ({ storeProduct, categories }) => {
                     </div>
                     <div className="mb-3">
                         <label htmlFor="categoryId" className="form-label">Kategori</label>
-                        <select id="categoryId" className="form-control br-10" defaultValue="0" onClick={(e) => setForm({
-                            ...form,
-                            categoryId: e.target.value
-                        })}>
-                            <option value="0">-- Pilih Kategori --</option>
-                            {categories.map((category, index) => {
-                                return (
-                                    <option key={category.id} value={category.id} >{category.name}</option>
-                                )
-                            })}
-                        </select>
+                        <div className="d-flex">
+                            <select id="categoryId" className="form-control br-10" defaultValue="0" onClick={(e) => setForm({
+                                ...form,
+                                categoryId: e.target.value
+                            })}>
+                                <option value="0">-- Pilih Kategori --</option>
+                                {categories.map((category, index) => {
+                                    return (
+                                        <option key={category.id} value={category.id} >{category.name}</option>
+                                    )
+                                })}
+                            </select>
+                            <div className="btn btn-outline-secondary-mini br-10 ms-3" onClick={() => setModal()}>
+                                <Plus size={20} color="white" />
+                            </div>
+                        </div>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="description" className="form-label">Deskripsi</label>
@@ -226,6 +216,10 @@ const ProductForm = ({ storeProduct, categories }) => {
                         </div>
                 }
             </form >
+            <ModalCategory
+                isOpen={isOpen}
+                setModal={setIsOpen}
+            />
         </div >
     )
 }

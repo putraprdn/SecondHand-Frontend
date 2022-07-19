@@ -160,6 +160,18 @@ a:hover{
   -o-border-radius: 10px 10px 10px 10px;
 }
 
+.btn-outline-secondary-mini {
+  background-color: #4B1979;
+  border-color: #4B1979 !important;
+  color: white;
+  padding: 7px 10px;
+  border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -ms-border-radius: 10px 10px 10px 10px;
+  -o-border-radius: 10px 10px 10px 10px;
+}
+
 .btn-outline-secondary:hover {
   background-color: #e6e1ec;
   border-color: #E2D4F0 !important;
