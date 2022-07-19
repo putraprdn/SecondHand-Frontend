@@ -4,13 +4,15 @@ import CurrencyInput from 'react-currency-input-field';
 import styles from '../../styles/ModalTawar.module.css'
 import { useRouter } from 'next/dist/client/router';
 import { getRequest } from '../../pages/api/apiConfig';
+import axios from 'axios';
+import Swal from 'sweetalert2'
 
 const ModalTawar = () => {
   const router = useRouter()
   const { id } = router.query
   const [product, setProduct] = useState({})
   const [img, setImg] = useState('')
-  const [price, setPrice] = useState(0)
+  const [isprice, setPrice] = useState(0)
 
   const getProductData = async (id) => {
     try {
@@ -21,14 +23,45 @@ const ModalTawar = () => {
       console.log(error);
     }
   }
+  
+  const handleOnValueChange = (e) => {
+    setPrice(e)
+  }
 
+  const handleOffer = async (id) => {
+    try {
+      const res = await axios.post(`https://pa-be-k3.herokuapp.com/api/offer/create/${id}`, 
+        {
+          price : parseInt(isprice)
+        }
+      , {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('token').substring(7)
+        }
+      })
+
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Penawaran Berhasil',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    } catch (error) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'Penawaran Gagal',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    }
+  }
   useEffect(() => {
     getProductData(id)
   })
 
-  const handleOnValueChange = (e) => {
-    setPrice(e)
-  }
 
   return (
     <div className="modal fade" id="modalTawar" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -64,15 +97,17 @@ const ModalTawar = () => {
                   className={"form-control px-3 py-2 shadow-sm rounded-16"}
                   prefix={'Rp'}
                   step={1}
-                  value={price}
+                  value={isprice}
                   onValueChange={handleOnValueChange}
                 />
               </div>
               <div className="modal-footer border-top-0 mb-3">
                 <button 
+                  data-bs-dismiss="modal"
                   type="button" 
                   className="rounded-16 flex-fill btn btn-primary p-2 "
-                  onClick={() => console.log(price)}
+                  onClick={() => handleOffer(id)
+                  }
                 >
                   Kirim
                 </button>

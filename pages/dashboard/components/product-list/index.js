@@ -9,7 +9,7 @@ const ProductList = ({ product, categories, butIndex, search }) => {
             {
                 productData.filter(data => data.name.includes(search)).map((product, index) => {
                     return (
-                        <ProductCard key={product.id} productImage={product.images[0].image} productName={product.name} productCategory={
+                        <ProductCard key={product.id} productId={product.id} productImage={product?.images[0]?.image} productName={product.name} productCategory={
                             categories.filter(category => category.id === product.categoryId).map((category, _) => {
                                 return category.name
                             })

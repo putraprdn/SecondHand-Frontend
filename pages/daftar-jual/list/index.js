@@ -45,7 +45,6 @@ const List = () => {
                     <p className="text-muted">Tambah Produk</p>
                 </div>
             </div>
-          </div>
         </div>
         {
           product && product.map((item, index) => {

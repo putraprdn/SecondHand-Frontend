@@ -1,6 +1,9 @@
 import { currencyFormat } from '../../services/currency'
+import { useState } from 'react'
 
 const CardBuy = ({isSeller, isProduct, isCategory}) => {
+
+  const [isDisabled, setDisabled] = useState('')
 
   return (
     <div className='card'>
@@ -12,7 +15,7 @@ const CardBuy = ({isSeller, isProduct, isCategory}) => {
           {isSeller ? 
             <button className="btn btn-outline-primary fw-500">Edit</button>
           : 
-            <button className="btn btn-primary fw-500" type="button" data-bs-toggle="modal" data-bs-target="#modalTawar">Saya tertarik dan ingin nego</button>
+            <button className={`${isDisabled} btn btn-primary fw-500 `} type="button" data-bs-toggle="modal" data-bs-target="#modalTawar">Saya tertarik dan ingin nego</button>
           }
           
         </div>
