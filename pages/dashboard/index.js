@@ -1,9 +1,9 @@
 import axios from 'axios';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { NavBar } from '../../components';
 import AdsCarousel from './components/ads-carousel';
 import CategoryTab from './components/category-tab';
+import NavBar from './components/navbar';
 import ProductList from './components/product-list';
 
 const Dashboard = () => {
