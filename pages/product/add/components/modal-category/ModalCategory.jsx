@@ -1,6 +1,27 @@
 
+import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
-const ModalCategory = ({ isOpen, setModal }) => {
+const ModalCategory = ({ isOpen, setModal, storeCategory }) => {
+
+    const [form, setForm] = useState({
+        name: "",
+        description: ""
+    })
+
+    const verivyData = () => {
+        if (form.name === "") {
+            alert("Nama produk belum diisi")
+        } else if (form.description === "") {
+            alert("Deskripsi produk belum diisi")
+        } else {
+            storeCategory(form).then((_) => {
+
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+    }
+
     return (
         <Modal
             show={isOpen}
@@ -14,15 +35,41 @@ const ModalCategory = ({ isOpen, setModal }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h4>Centered Modal</h4>
-                <p>
-                    Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                    dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                    consectetur ac, vestibulum at eros.
-                </p>
+                <form>
+                    <div>
+                        <div className="mb-3">
+                            <label htmlFor="name" className="form-label">Nama Kategori</label>
+                            <input
+                                type="text"
+                                className="form-control br-10"
+                                id="name" name="name"
+                                placeholder="Nama Kategori"
+                                onChange={(e) => setForm({
+                                    ...form,
+                                    name: e.target.value
+                                })}
+                            />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="description" className="form-label">Deskripsi Kategori</label>
+                            <textarea
+                                className="form-control br-10"
+                                id="description"
+                                rows={3}
+                                defaultValue={""}
+                                placeholder="Contoh : Jalan Ikan Hiu 33" onChange={(e) => setForm({
+                                    ...form,
+                                    description: e.target.value
+                                })}
+                            />
+                        </div>
+                    </div>
+                </form>
+
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={() => setModal(false)}>Close</Button>
+                <Button onClick={() => verivyData()}>Add</Button>
             </Modal.Footer>
         </Modal>
     )

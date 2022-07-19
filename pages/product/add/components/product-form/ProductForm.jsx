@@ -9,7 +9,7 @@ import ModalCategory from "../modal-category/ModalCategory";
 import LoadingBox from "../loading-box/LoadingBox";
 import ErrorBox from "../error-box/ErrorBox";
 
-const ProductForm = ({ storeProduct, categories }) => {
+const ProductForm = ({ storeProduct, categories, storeCategory }) => {
 
     const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
         readAs: 'DataURL',
@@ -219,6 +219,7 @@ const ProductForm = ({ storeProduct, categories }) => {
             <ModalCategory
                 isOpen={isOpen}
                 setModal={setIsOpen}
+                storeCategory={storeCategory}
             />
         </div >
     )
