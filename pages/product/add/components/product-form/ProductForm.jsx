@@ -3,12 +3,8 @@ import currencyFormat from "../../../../dashboard/service/currency";
 import { Plus } from "react-feather"
 import { useFilePicker } from 'use-file-picker';
 import Link from "next/link";
-
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-
-import img_fb from '../../../../../public/images/facebook.png'
-
+import Router from "next/router";
+import { LoadingAnimation } from "../../../../../components";
 
 const LoadingBox = () => {
     return (
@@ -33,7 +29,7 @@ const ErrorBox = () => {
     )
 }
 
-const ProductForm = () => {
+const ProductForm = ({ storeProduct, categories }) => {
 
     const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
         readAs: 'DataURL',
@@ -50,9 +46,15 @@ const ProductForm = () => {
         },
     });
 
-    const [form, setForm] = useState({})
+    const [form, setForm] = useState({
+        name: "",
+        description: "",
+        price: 0,
+        categoryId: 0
+    })
 
-    const [price, setPrice] = useState(0)
+    const [onLoading, setOnLoading] = useState(false);
+
     var formData = new FormData();
 
     const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
@@ -77,20 +79,40 @@ const ProductForm = () => {
 
     const addData = async () => {
         await filesContent.map((file, _) => {
+            const blob = file.content.substring(5, 14) == 'image/png' || file.content.substring(5, 14) == 'image/jpg' ? b64toBlob(file.content.substring(22), file.content.substring(5, 14)) : b64toBlob(file.content.substring(23), file.content.substring(5, 15));
 
-            const blob = file.content.substring(5, 14) == 'image/png' ? b64toBlob(file.content.substring(22), file.content.substring(5, 14)) : b64toBlob(file.content.substring(23), file.content.substring(5, 15));
             formData.append("image", blob, file.name)
         })
+
         formData.append("name", form.name);
         formData.append("description", form.description);
         formData.append("price", form.price);
         formData.append("categoryId", form.categoryId);
     }
 
-    // useEffect(() => {
-    //     console.log(filesContent);
-    // })
-
+    const verivyData = () => {
+        if (form.name === "") {
+            alert("Nama produk belum diisi")
+        } else if (form.description === "") {
+            alert("Deskripsi produk belum diisi")
+        } else if (form.price === 0) {
+            alert("Harga produk belum diisi")
+        } else if (form.categoryId === 0) {
+            alert("Kategori produk belum diisi")
+        } else if (filesContent === []) {
+            alert("Gambar produk belum diisi")
+        } else {
+            addData().then((_) => {
+                setOnLoading(true)
+                storeProduct(formData).then(() => {
+                    // Router.reload()
+                    Router.push('/daftar-jual/list')
+                });
+            }).catch((err) => {
+                console.log(err);
+            });
+        }
+    }
 
     return (
         <div className="col-6 mb-5">
@@ -131,11 +153,11 @@ const ProductForm = () => {
                             categoryId: e.target.value
                         })}>
                             <option value="0">-- Pilih Kategori --</option>
-                            <option name="categoryId" value="1" >Hobi</option>
-                            <option name="categoryId" value="2" >Kendaraan</option>
-                            <option name="categoryId" value="3" >Baju</option>
-                            <option name="categoryId" value="4" >Elektronik</option>
-                            <option name="categoryId" value="5" >Kesehatan</option>
+                            {categories.map((category, index) => {
+                                return (
+                                    <option key={category.id} value={category.id} >{category.name}</option>
+                                )
+                            })}
                         </select>
                     </div>
                     <div className="mb-3">
@@ -173,7 +195,7 @@ const ProductForm = () => {
                                 loading ? <LoadingBox /> : errors.length ? <ErrorBox /> : <div className="col-2" hidden></div>
                             }
                             <div className="col-2">
-                                <div className="btn position-relative border border-2 br-10" style={{ width: "90px", height: "90px" }} onClick={() => openFileSelector()}>
+                                <div className="btn position-relative border border-2  border-dashed br-10" style={{ width: "90px", height: "90px" }} onClick={() => openFileSelector()}>
                                     <div className="position-absolute top-50 start-50 translate-middle">
                                         <Plus size={20} color="grey" />
                                     </div>
@@ -183,24 +205,26 @@ const ProductForm = () => {
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col">
-                        <Link href="/product/add/preview"><button type="button" className="btn btn-outline-primary w-100">Preview</button></Link>
-                    </div>
-                    <div className="col">
-                        <button type="button" className="btn btn-primary w-100" onClick={
-                            () => {
-                                addData().then((_) => {
-                                    for (const value of formData.values()) {
-                                        console.log(value);
-                                    };
-                                }).catch((err) => {
-                                    console.log(err);
-                                });
-                            }
-                        }>Terbitkan</button>
-                    </div>
-                </div>
+                {
+                    onLoading == true
+                        ? <div className="col position-relative">
+                            <div className="position-absolute top-50 start-50 translate-middle">
+                                <LoadingAnimation />
+                            </div>
+                        </div>
+                        : <div className="row">
+                            <div className="col">
+                                <Link href="/product/add/preview"><button type="button" className="btn btn-outline-primary w-100">Preview</button></Link>
+                            </div>
+                            <div className="col">
+                                <button type="button" className="btn btn-primary w-100" onClick={
+                                    () => {
+                                        verivyData()
+                                    }
+                                }>Terbitkan</button>
+                            </div>
+                        </div>
+                }
             </form >
         </div >
     )

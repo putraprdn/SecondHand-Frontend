@@ -1,33 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BackButton from "./components/back-button/BackButton";
 import NavBar from "./components/navbar"
 import ProductForm from "./components/product-form/ProductForm";
 import axios from "axios";
-
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import Head from "next/head";
-import { postRequest } from "../../api/apiConfig";
 
 const AddProduct = () => {
-    const [product, setProduct] = useState([])
-    const [images, setImages] = useState([])
+    const [categories, setCategories] = useState([])
 
     const storeProduct = async (form) => {
         try {
             const config = {
                 headers: {
                     'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
+                    'Access-Control-Allow-Origin': '*',
                     'Authorization': localStorage.getItem('token').substring(7),
-                    // 'Authorization': localStorage.getItem('token')
                 },
-                // transformRequest: form => form,
             }
-
             console.log(form);
-
             const response = await axios.post('https://pa-be-k3.herokuapp.com/api/product/create', form, config)
-            // const response = await postRequest('/product/create', form, 1000)
             // setRefetch(response.data.data)
             console.log(response.data.data);
 
@@ -36,7 +27,19 @@ const AddProduct = () => {
         }
     }
 
-    // console.log(localStorage.getItem('token').substring(7));
+    const getCategoriesData = async () => {
+        try {
+            const response = await axios.get('https://pa-be-k3.herokuapp.com/api/category/list')
+            // console.log(response.data.data);
+            return setCategories(response.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getCategoriesData();
+    }, []);
 
     return (
         <div>
@@ -49,7 +52,7 @@ const AddProduct = () => {
             <div className="container">
                 <div className="row justify-content-center">
                     <BackButton />
-                    <ProductForm />
+                    <ProductForm storeProduct={storeProduct} categories={categories} />
                 </div>
             </div>
         </div>

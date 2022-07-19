@@ -1,21 +1,20 @@
 import { Search } from "react-feather";
-// import '../../../../../styles/globals.css'
+import styles from '../../../../../styles/Search.module.css'
 
-const SearchEngine = () => {
+const SearchEngine = ({ setSearch, setRefetch }) => {
     return (
-        <form className="d-flex align-self-center" role="search">
-            <div className="d-flex form-control bg-light">
-                <div className=" align-self-center">
-                    <input className="border border-light bg-light txt-field" type="search" placeholder="Search" aria-label="Search" style={{ borderColor: "#f8f9fa", }} />
-                </div>
-                <div >
+        <div className={`${styles['w-444']} position-relative`}>
+            <form className="d-flex" role="search">
+                <input className="form-control flex-grow-1 w-100 px-3 py-2 rounded-16" type="search" placeholder="Cari disini" aria-label="Search" onChange={(text) => {
+                    setSearch(text.target.value)
+                    // console.log(text.target.value);
+                    // setRefetch(text.target.value)
+                }} />
+                <div className="btn position-absolute rounded-16" style={{ right: 1 }}>
                     <Search size={20} />
                 </div>
-            </div>
-            <div className="ms-auto ml-auto">
-                <button className="btn btn-outline-success" type="submit" hidden>Search</button>
-            </div>
-        </form>
+            </form>
+        </div>
     )
 }
 
