@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import img_fb from '../../../../../public/images/facebook.png'
+
 
 const LoadingBox = () => {
     return (
@@ -51,26 +53,38 @@ const ProductForm = () => {
     const [form, setForm] = useState({})
 
     const [price, setPrice] = useState(0)
-    const formData = new FormData();
+    var formData = new FormData();
+
+    const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+        const byteCharacters = atob(b64Data);
+        const byteArrays = [];
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+        }
+
+        const blob = new Blob(byteArrays, { type: contentType });
+        return blob;
+    }
 
     const addData = async () => {
-        const images = []
-        for (let i = 0; i < filesContent.length; i++) {
-            images.push(filesContent[i].content)
-            
-        }
-        console.log(images)
+        await filesContent.map((file, _) => {
 
-        await formData.append("image", images);
-        await formData.append("name", form.name);
-        await formData.append("price", form.price);
-        await formData.append("categoryId", form.categoryId);
-        await formData.append("description", form.description);
-
-        // console.log(form.name);
-        // console.log(form.price);
-        // console.log(form.categoryId);
-    
+            const blob = file.content.substring(5, 14) == 'image/png' ? b64toBlob(file.content.substring(22), file.content.substring(5, 14)) : b64toBlob(file.content.substring(23), file.content.substring(5, 15));
+            formData.append("image", blob, file.name)
+        })
+        formData.append("name", form.name);
+        formData.append("description", form.description);
+        formData.append("price", form.price);
+        formData.append("categoryId", form.categoryId);
     }
 
     // useEffect(() => {

@@ -80,6 +80,11 @@ a:hover{
   border-color: #4B1979 !important;
 }
 
+.disabled {
+  background-color: #D0D0D0 !important;
+  border-color: #D0D0D0 !important;
+}
+
 .btn-primary {
   background-color: #4B1979;
   border-color: #4B1979 !important;

@@ -41,7 +41,10 @@ const IconButton = () => {
           </a>
           <ul className="dropdown-menu dropdown-menu-end position-absolute rounded-16" aria-labelledby="navbarDropdown">
             <li>
-              <a className="dropdown-item" onClick={() => onEdit()} style={{cursor:"pointer"}}><User className="me-2"/> Edit</a>
+              <a className="dropdown-item" onClick={() => onEdit()} style={{cursor:"pointer"}}>
+                <User className="me-2"/> 
+                Edit
+              </a>
             </li>
             <li>
                 <a className="mb-1 dropdown-item text-danger" onClick={() => onlogout()} style={{cursor:"pointer"}}><LogOut className="me-2"/> Log Out</a>

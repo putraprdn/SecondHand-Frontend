@@ -2,19 +2,23 @@ import { ProductCarousal, NavBar, ProductDesc, SellerCardProfile, CardBuy } from
 import { ModalTawar } from '../../../components'
 import { getRequest } from '../../api/apiConfig'
 import { useState, useEffect } from 'react'
+import { getCategoryName } from '../../../services/getCategoryName'
 
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/userSilce";
 
-const DetailProduct = ({ product }) => {
+const DetailProduct = ({ product, category }) => {
     
     const userData = useSelector(selectUser)
     const [seller, setSeller] = useState(false)
     
     const getSeller = (userData, product) => {
-        if (product.createdBy === userData.email) {
+        if (product.createdBy === userData?.email) {
             setSeller(true)
         }  
+        else {
+            setSeller(false)
+        }
     }
     
     useEffect(() => {
@@ -30,7 +34,7 @@ const DetailProduct = ({ product }) => {
                     <ProductCarousal isProduct={product.images}/>
                 </div>
                 <div className='col-lg-4 col-md-5'>
-                    <CardBuy isSeller={seller} isProduct={product} />
+                    <CardBuy isSeller={seller} isProduct={product} isCategory={category} />
                     <SellerCardProfile user={product.seller}/>
                 </div>
             </div>
@@ -64,10 +68,12 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
     const res = await getRequest(`product/${params.id}`)
+    const category = await getCategoryName(res.data.data.categoryId)
     const product = res.data.data
     return {
         props: {
-            product
+            product,
+            category
         }
     }
 }

@@ -26,14 +26,20 @@ const List = () => {
   }
 
   useEffect(() => {
-    getProductData()
+    const token = localStorage.getItem('token')
+    if (token) {
+      getProductData()
+    } 
+    else {
+      router.push('/auth/login')
+    }
   })
 
   return (
     <LayoutDaftarJual>
       <div className="row g-3">
         <div className="col-xl-3 col-md-4 col-lg-4 col-sm-6 col-xs-6">
-            <div className="btn position-relative border border-2 br-10 border-dashed" style={{ width: "100%", height: "230px" }} onClick={() => router.push('/product/add', 'product') }>
+            <div className="btn position-relative border border-2 br-10 border-dashed" style={{ width: "100%", height: "230px" }} onClick={() => router.push('/product/add') }>
                 <div className="position-absolute top-50 start-50 translate-middle">
                     <Plus size={20} color="grey" />
                     <p className="text-muted">Tambah Produk</p>

@@ -17,10 +17,11 @@ const AddProduct = () => {
         try {
             const config = {
                 headers: {
-                    'content-type': 'multipart/form-data',
-                    'Authorization': localStorage.getItem('token').substring(7)
+                    'Content-Type': `multipart/form-data; boundary=${form._boundary}`,
+                    'Authorization': localStorage.getItem('token').substring(7),
                     // 'Authorization': localStorage.getItem('token')
-                }
+                },
+                // transformRequest: form => form,
             }
 
             console.log(form);

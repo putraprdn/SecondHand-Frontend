@@ -58,8 +58,10 @@ export default function Login() {
           address : user.data.data.address,
           phone : user.data.data.phoneNumber,
         }))
+        const dataUser = user.data.data
+        const isComplete = Object.values(dataUser).includes(null) ? false : true
 
-        router.push('/dashboard')
+        router.push(isComplete ? '/' : '/profile/edit')
       } catch (error) {
         setMsg(error.response?.data?.message)
         setOnLoading(false)

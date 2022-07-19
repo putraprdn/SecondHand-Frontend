@@ -5,11 +5,14 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/router';
 import { postRequest } from '../../api/apiConfig';
-
+import { useState } from 'react';
+import { LoadingAnimation } from "../../../components";
 
 export default function Register() {
 
   const router = useRouter();
+  const [onLoading, setOnLoading] = useState(false);
+  const [msg, setMsg] = useState('');
 
   const formik = useFormik({
     initialValues: {
@@ -32,11 +35,12 @@ export default function Register() {
           "Harus berisi 8 karakter, satu huruf besar, satu huruf kecil, dan satu angka"
         ),
       confirmPassword: Yup.string()
-        .required()
+        .required('Password harus diisi')
         .oneOf([Yup.ref("password"), null], "Passwords harus sama"),
     }),
     onSubmit: values => {
       onRegister(values)
+      setOnLoading(true)
     },
   })
 
@@ -47,10 +51,11 @@ export default function Register() {
         name: thisName,
         email: thisEmail,
         password: thisPassword
-      }, 1000)
+      })
       router.push('/auth/login')
     } catch (error) {
-      console.log(error.response.data.message);
+      setMsg(error.response.data.message)
+      setOnLoading(true)
     }
   }
 
@@ -131,9 +136,10 @@ export default function Register() {
                     <div className="text-danger">{formik.errors.confirmPassword}</div>
                   ) : null}
                 </div>
+                {onLoading ? <LoadingAnimation /> : 
                 <button type="submit" className={styles.button}>
                   Daftar
-                </button>
+                </button>}
               </form>
             </div>
             <p className={styles.footer}>

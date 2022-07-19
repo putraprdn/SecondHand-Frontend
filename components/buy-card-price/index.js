@@ -1,24 +1,12 @@
 import { currencyFormat } from '../../services/currency'
-import { getCategoryName } from '../../services/getCategoryName'
-import { useEffect, useState } from 'react'
 
-const CardBuy = ({isSeller, isProduct}) => {
-
-  const [category, setCategory] = useState('')
-  useEffect(() => {
-    getCategoryName(isProduct.categoryId).then(res => {
-      setCategory(res)
-    }).catch(err => {
-      console.log(err)
-    }
-    )
-  })
+const CardBuy = ({isSeller, isProduct, isCategory}) => {
 
   return (
     <div className='card'>
       <div className="card-body">
         <h5 className="card-title mb-2">{isProduct?.name}</h5>
-        <h6 className="card-subtitle mb-2 text-muted">{category}</h6>
+        <h6 className="card-subtitle mb-2 text-muted">{isCategory? isCategory : 'Category'}</h6>
         <p className="card-text fs-5 fw-400">{currencyFormat(isProduct?.price)}</p>
         <div className="d-grid gap-2">
           {isSeller ? 

@@ -139,7 +139,7 @@ const FormEdit = () => {
             <div className={styles.uploadimg}>
               <label htmlFor="select-image">
                 <input 
-                  accept="image/*" 
+                  accept=".png, .jpg, .jpeg" 
                   type="file" 
                   id="select-image"
                   style={{ display: 'none' }}
