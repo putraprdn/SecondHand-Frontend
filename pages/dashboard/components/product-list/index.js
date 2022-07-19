@@ -2,12 +2,14 @@ import ProductCard from "./components/ProductCard";
 
 const ProductList = ({ product, categories, butIndex, search }) => {
 
-    const productData = butIndex == -1 ? product : product.filter(item => item.categoryId == butIndex)
+    const productData = butIndex == -1
+        ? product.filter(item => item.isAvailable == true)
+        : product.filter(item => item.categoryId == butIndex && item.isAvailable == true)
 
     return (
         <div className="row row-cols-1 row-cols-md-5 g-4 mt-1">
-            {//https://dummyimage.com/300x200/000000/fff.png
-                productData.filter(data => data.categoryId != 226).map((product, index) => {
+            {
+                productData.filter(data => data.name.includes(search)).map((product, index) => {
                     return (
                         <ProductCard
                             key={product.id}
