@@ -4,6 +4,7 @@ import CurrencyInput from 'react-currency-input-field';
 import styles from '../../styles/ModalTawar.module.css'
 import { useRouter } from 'next/dist/client/router';
 import { getRequest } from '../../pages/api/apiConfig';
+import { currencyFormat } from '../../services/currency.js';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 
@@ -40,19 +41,26 @@ const ModalTawar = () => {
           'Authorization': localStorage.getItem('token').substring(7)
         }
       })
+      router.reload()
 
       Swal.fire({
         position: 'center',
         icon: 'success',
         title: 'Penawaran Berhasil',
         showConfirmButton: false,
-        timer: 3000
+        allowOutsideClick: false,
+        timerProgressBar: true,
+        timer: 10000
       })
+
+      
     } catch (error) {
+      const errMessage = error.response?.data?.message
+      const err = errMessage.toString()
       Swal.fire({
         position: 'center',
         icon: 'error',
-        title: 'Penawaran Gagal',
+        title: err,
         showConfirmButton: false,
         timer: 3000
       })
@@ -82,7 +90,7 @@ const ModalTawar = () => {
                 </div>
                 <div>
                   <p className='fw-bold mb-1'>{product?.name}</p>
-                  <p className='m-0'>Rp. {product?.price}</p>
+                  <p className='m-0'>{currencyFormat(product?.price)}</p>
                 </div>
               </div>
               <div className='mx-3 mb-2'>

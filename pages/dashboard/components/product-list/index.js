@@ -14,6 +14,7 @@ const ProductList = ({ product, categories, butIndex, search }) => {
                         <ProductCard
                             key={product.id}
                             productImage={product.images.length > 0 ? product.images[0].image : "https://dummyimage.com/300x200/000000/fff.png"}
+                            productId={product.id}
                             productName={
                                 product.name} productCategory={
                                     categories.filter(category => category.id === product.categoryId).map((category, _) => {

@@ -1,5 +1,5 @@
-export const filterProductByAvailable = (product) => {
-    return product.filter(item => item.isAvailable === true)
+export const filterProductByAvailable = (product, status) => {
+    return product.filter(item => item.isAvailable === status)
 }
 
 export const filterProductByName = (product, userName) => {

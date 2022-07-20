@@ -13,27 +13,30 @@ const List = () => {
   const userData = useSelector(selectUser)
     
   const router = useRouter()
-  const [product, setProduct] = useState()
+  const [product, setProduct] = useState([])
 
-  const getProductData = async () => {
-    try {
-      const res = await getRequest('product/list')
-      const productFilter = filterProductByName(filterProductByAvailable(res.data.data), userData.email)
-      setProduct(productFilter)
-    } catch (error) {
-      console.log(error);
-    }
-  }
+
 
   useEffect(() => {
     const token = localStorage.getItem('token')
+
+    const getProductData = async () => {
+      try {
+        const res = await getRequest('product/list')
+        const productFilter = filterProductByName(filterProductByAvailable(res.data.data, true), userData.email)
+        setProduct(productFilter)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    
     if (token) {
       getProductData()
     } 
     else {
       router.push('/auth/login')
     }
-  })
+  }, [])
 
   return (
     <LayoutDaftarJual>

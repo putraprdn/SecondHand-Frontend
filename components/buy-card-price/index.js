@@ -1,10 +1,7 @@
 import { currencyFormat } from '../../services/currency'
-import { useState } from 'react'
 
-const CardBuy = ({isSeller, isProduct, isCategory}) => {
-
-  const [isDisabled, setDisabled] = useState('')
-
+const CardBuy = ({isSeller, isProduct, isCategory, isDisabled}) => {
+  
   return (
     <div className='card'>
       <div className="card-body">
@@ -13,7 +10,7 @@ const CardBuy = ({isSeller, isProduct, isCategory}) => {
         <p className="card-text fs-5 fw-400">{currencyFormat(isProduct?.price)}</p>
         <div className="d-grid gap-2">
           {isSeller ? 
-            <button className="btn btn-outline-primary fw-500">Edit</button>
+            <button className={`${isDisabled} btn btn-outline-primary fw-500`}>Edit</button>
           : 
             <button className={`${isDisabled} btn btn-primary fw-500 `} type="button" data-bs-toggle="modal" data-bs-target="#modalTawar">Saya tertarik dan ingin nego</button>
           }

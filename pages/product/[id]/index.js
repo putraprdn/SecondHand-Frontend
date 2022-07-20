@@ -7,10 +7,11 @@ import { getCategoryName } from '../../../services/getCategoryName'
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/slices/userSilce";
 
-const DetailProduct = ({ product, category }) => {
+const DetailProduct = ({ product, category, offerDetail }) => {
     
     const userData = useSelector(selectUser)
     const [seller, setSeller] = useState(false)
+    const [isThisDisabled, setDisabled] = useState('')
     
     const getSeller = (userData, product) => {
         if (product.createdBy === userData?.email) {
@@ -20,9 +21,23 @@ const DetailProduct = ({ product, category }) => {
             setSeller(false)
         }
     }
-    
+
+    const getStatusUserOffer = (offerDetail, userData) => {
+        const token = localStorage.getItem('token')
+        token ? setDisabled('') : setDisabled('disabled')
+
+        if (offerDetail?.length > 0) {
+            for (let i = 0; i < offerDetail.length; i++) {
+                if (offerDetail[i].createdBy === userData?.email && offerDetail[i].status === 'PENDING') {
+                    setDisabled('disabled')
+                } 
+            }
+        }
+    }
+
     useEffect(() => {
         getSeller(userData, product)
+        getStatusUserOffer(offerDetail, userData)
     })
 
   return (
@@ -34,7 +49,7 @@ const DetailProduct = ({ product, category }) => {
                     <ProductCarousal isProduct={product.images}/>
                 </div>
                 <div className='col-lg-4 col-md-5'>
-                    <CardBuy isSeller={seller} isProduct={product} isCategory={category} />
+                    <CardBuy isDisabled={isThisDisabled} isSeller={seller} isProduct={product} isCategory={category} />
                     <SellerCardProfile user={product.seller}/>
                 </div>
             </div>
@@ -62,20 +77,28 @@ export async function getStaticPaths() {
     )
     return {
         paths,
-        fallback: false
+        fallback: true
     }
 }
 
 export async function getStaticProps({ params }) {
     const res = await getRequest(`product/${params.id}`)
     const category = await getCategoryName(res.data.data.categoryId)
+    const offer = await getRequest(`offer/product/${params.id}`)
+
     const product = res.data.data
+    const offerDetail = offer.data.data
+
     return {
         props: {
             product,
-            category
-        }
+            category,
+            offerDetail
+        },
+
+        revalidate: 10
     }
+
 }
 
 export default DetailProduct
