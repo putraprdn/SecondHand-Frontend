@@ -38,14 +38,14 @@ const Terjual = () => {
   return (
     <LayoutDaftarJual>      
       <div className="row g-3">
-        {product.lenght > 0 ? 
+        {product.length > 0 ? 
             product.map((item, index) => {
               return (
                 <div className="col-xl-3 col-md-4 col-lg-4 col-sm-6 col-xs-6" key={index}>
                   <CardProduct product={item} />
                 </div>
               )
-            }) : <NotFound content={'diminati'}/> 
+            }) : <NotFound content={'terjual'}/> 
           }
       </div>
     </LayoutDaftarJual>

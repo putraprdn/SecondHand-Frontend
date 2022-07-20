@@ -38,7 +38,7 @@ const DetailProduct = ({ product, category, offerDetail }) => {
     useEffect(() => {
         getSeller(userData, product)
         getStatusUserOffer(offerDetail, userData)
-    })
+    }, [])
 
   return (
     <div>
@@ -68,35 +68,40 @@ const DetailProduct = ({ product, category, offerDetail }) => {
   )
 }
 
-export async function getStaticPaths() {
-    const res = await getRequest('product/list')
-    const product = res.data.data
-    const paths = product.map((item) => ({
-        params: { id: item.id.toString() }
-    })
-    )
-    return {
-        paths,
-        fallback: true
-    }
-}
+// export async function getStaticPaths() {
+//     const res = await getRequest('product/list')
+//     const product = res.data.data
+//     const paths = product.map((item) => ({
+//         params: { id: item.id.toString() }
+//     })
+//     )
+//     return {
+//         paths,
+//         fallback: true
+//     }
+// }
 
-export async function getStaticProps({ params }) {
-    const res = await getRequest(`product/${params.id}`)
-    const category = await getCategoryName(res.data.data.categoryId)
-    const offer = await getRequest(`offer/product/${params.id}`)
+export async function getServerSideProps(context) {
+    const  id  = context.params.id
 
-    const product = res.data.data
-    const offerDetail = offer.data.data
+    try {
+        const res = await getRequest(`product/${id}`)
+        const category = await getCategoryName(res.data.data.categoryId)
+        const offer = await getRequest(`offer/product/${id}`)
+
+        const product = res.data.data
+        const offerDetail = offer.data.data
 
     return {
         props: {
             product,
             category,
             offerDetail
-        },
+        }
+    }
 
-        revalidate: 10
+    } catch (error) {
+        console.log(error)
     }
 
 }

@@ -1,6 +1,10 @@
 import { currencyFormat } from '../../services/currency'
+import { useRouter } from 'next/router'
 
 const CardBuy = ({isSeller, isProduct, isCategory, isDisabled}) => {
+  
+  const router = useRouter()
+  const id = isProduct.id
   
   return (
     <div className='card'>
@@ -10,7 +14,14 @@ const CardBuy = ({isSeller, isProduct, isCategory, isDisabled}) => {
         <p className="card-text fs-5 fw-400">{currencyFormat(isProduct?.price)}</p>
         <div className="d-grid gap-2">
           {isSeller ? 
-            <button className={`${isDisabled} btn btn-outline-primary fw-500`}>Edit</button>
+            <button 
+              className={`${isDisabled} btn btn-outline-primary fw-500`}
+              onClick={() => {
+                router.push({
+                  pathname: '/product/edit/[id]',
+                  query: { id : id }
+                })
+              }}>Edit</button>
           : 
             <button className={`${isDisabled} btn btn-primary fw-500 `} type="button" data-bs-toggle="modal" data-bs-target="#modalTawar">Saya tertarik dan ingin nego</button>
           }
