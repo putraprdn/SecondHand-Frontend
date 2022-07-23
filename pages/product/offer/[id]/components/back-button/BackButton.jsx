@@ -4,7 +4,8 @@ import { ArrowLeft } from "react-feather"
 const BackButton = () => {
 
     const backPage = () => {
-        Router.push('/daftar-jual/list')
+        // Router.push('/daftar-jual/list')
+        Router.back()
     }
 
     return (

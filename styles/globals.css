@@ -249,6 +249,23 @@ a:hover{
   -o-border-radius: 20px !important;
 }
 
+.br-10 {
+  border-radius: 10px !important;
+  -webkit-border-radius: 10px !important;
+  -moz-border-radius: 10px !important;
+  -ms-border-radius: 10px !important;
+  -o-border-radius: 10px !important;
+}
+
+.fs-10 {
+  font-size: 12px !important;
+  font-weight: lighter !important;
+}
+
+.color-grey {
+  color: grey !important;
+}
+
 .border-dashed {
   border-style: dashed !important;
   -webkit-border-style: dashed !important;
