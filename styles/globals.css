@@ -265,6 +265,15 @@ input[type="search"]::-webkit-search-cancel-button {
   width: 328px;
 }
 
+.overflow-scroll::-webkit-scrollbar{
+  display: none;
+}
+
+.overflow-scroll{
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
 @media screen and (max-width: 425px) {
   .navbar-nav {
       flex-direction: row;

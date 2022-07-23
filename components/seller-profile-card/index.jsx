@@ -12,7 +12,7 @@ const SellerCardProfile = ({ user }) => {
 
   const getUserDetail = (v) => {
     setuserDetail({
-      image : v === null ? '/profile_default.png' : v.image,
+      image : v === null ? '/profile_default.png' : v?.image,
       name : v?.name,
       city : v?.city
     })

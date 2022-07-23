@@ -11,5 +11,6 @@ import CardProduct from './Layout-daftar-jual/card-product'
 import NotFound from './Layout-daftar-jual/Not-found';
 import HeaderBar from './header'
 import LoadingAnimation from './LoadingAnimation'
+import CardDiminati from './Layout-daftar-jual/card-diminati'
 
-export { NavBar, FormEdit, ProductCarousal, ProductDesc, CardPrice, SellerCardProfile, CardBuy, ModalTawar, LayoutDaftarJual, CardProduct, NotFound, HeaderBar, LoadingAnimation }
+export { CardDiminati, NavBar, FormEdit, ProductCarousal, ProductDesc, CardPrice, SellerCardProfile, CardBuy, ModalTawar, LayoutDaftarJual, CardProduct, NotFound, HeaderBar, LoadingAnimation }
