@@ -14,7 +14,7 @@ const DetailProduct = ({ product, category, offerDetail }) => {
     const [isThisDisabled, setDisabled] = useState('')
     
     const getSeller = (userData, product) => {
-        if (product.createdBy === userData?.email) {
+        if (product?.createdBy === userData?.email) {
             setSeller(true)
         }  
         else {
@@ -28,7 +28,7 @@ const DetailProduct = ({ product, category, offerDetail }) => {
 
         if (offerDetail?.length > 0) {
             for (let i = 0; i < offerDetail.length; i++) {
-                if (offerDetail[i].createdBy === userData?.email && offerDetail[i].status === 'PENDING') {
+                if (offerDetail[i].createdBy.email === userData?.email && offerDetail[i].status === 'PENDING') {
                     setDisabled('disabled')
                 } 
             }

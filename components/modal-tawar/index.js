@@ -31,7 +31,7 @@ const ModalTawar = () => {
 
   const handleOffer = async (id) => {
     try {
-      const res = await axios.post(`https://pa-be-k3.herokuapp.com/api/offer/create/${id}`, 
+      const res = await axios.post(`https://new-pa-be-k3.herokuapp.com/api/offer/create/${id}`, 
         {
           price : parseInt(isprice)
         }

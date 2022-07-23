@@ -17,10 +17,6 @@ const Diminati = () => {
   const [product, setProduct] = useState([])
   const [offer, setOffer] = useState([])
 
-  const getWishlistProduct = async () => {
-
-  }
-
   useEffect(() => {
     const token = localStorage.getItem('token')
     const getProductData = async () => {

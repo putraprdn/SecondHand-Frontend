@@ -193,6 +193,15 @@ a:hover{
   /* lighting-color: #4B1979; */
 }
 
+.btn-outline-danger{
+  padding: 8px 18px;
+  border-radius: 10px 10px 10px 10px ;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -ms-border-radius: 10px 10px 10px 10px;
+  -o-border-radius: 10px 10px 10px 10px;
+}
+
 .txt-outline-field:focus {
   border-color: #f8f9fa !important;
 }
