@@ -4,12 +4,19 @@ import NavBar from "./components/navbar"
 import ProductForm from "./components/product-form/ProductForm";
 import axios from "axios";
 import Head from "next/head";
+import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
 
 const AddProduct = () => {
+
+    const router = useRouter()
+    const { id } = router.query;
+
     const [categories, setCategories] = useState([])
     const [refetch, setRefetch] = useState([]);
+    const [product, setProduct] = useState([]);
 
-    const storeProduct = async (form) => {
+    const updateProduct = async (id, form) => {
         try {
             const config = {
                 headers: {
@@ -18,20 +25,50 @@ const AddProduct = () => {
                     'Authorization': localStorage.getItem('token').substring(7),
                 },
             }
-            console.log(form);
-            const response = await axios.post('https://pa-be-k3.herokuapp.com/api/product/create', form, config)
-            // setRefetch(response.data.data)
+            const response = await axios.put(`https://pa-be-k3.herokuapp.com/api/product/update/${id}`, form, config)
+            Swal.fire({
+                toast: true,
+                icon: 'success',
+                position: 'top',
+                title: 'Berhasil Di Update',
+                showConfirmButton: false,
+                timer: 3500
+            })
 
+        } catch (error) {
+            console.log(error)
+            Swal.fire({
+                toast: true,
+                icon: 'error',
+                position: 'top',
+                title: 'Gagal Update',
+                showConfirmButton: false,
+                timer: 3500
+            })
+        }
+    }
+
+    const deleteProduct = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': localStorage.getItem('token').substring(7),
+                },
+            }
+            const response = await axios.delete(`https://new-pa-be-k3.herokuapp.com/api/product/delete/${id}`, config)
+            
         } catch (error) {
             console.log(error)
         }
     }
+
     const storeCategory = async (form) => {
         try {
             console.log(form);
-            const response = await axios.post('https://pa-be-k3.herokuapp.com/api/category/create', form)
+            const response = await axios.post('https://new-pa-be-k3.herokuapp.com/api/category/create', form)
             setRefetch(response.data.data)
-            console.log(response.data.data);
 
         } catch (error) {
             console.log(error)
@@ -40,7 +77,7 @@ const AddProduct = () => {
 
     const getCategoriesData = async () => {
         try {
-            const response = await axios.get('https://pa-be-k3.herokuapp.com/api/category/list')
+            const response = await axios.get('https://new-pa-be-k3.herokuapp.com/api/category/list')
             // console.log(response.data.data);
             return setCategories(response.data.data)
         } catch (error) {
@@ -48,8 +85,19 @@ const AddProduct = () => {
         }
     }
 
+    const getProductDetail = async (id) => {
+        try {
+            const response = await axios.get(`https://new-pa-be-k3.herokuapp.com/api/product/${id}`)
+            // console.log(response.data.data);
+            return setProduct(response.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         getCategoriesData();
+        getProductDetail(id)
     }, [refetch]);
 
     return (
@@ -64,7 +112,9 @@ const AddProduct = () => {
                 <div className="row justify-content-center">
                     <BackButton />
                     <ProductForm
-                        storeProduct={storeProduct}
+                        isProduct={product}
+                        updateProduct={updateProduct}
+                        deleteProduct={deleteProduct}
                         categories={categories}
                         storeCategory={storeCategory}
                     />

@@ -104,7 +104,7 @@ const FormEdit = () => {
         form.append('phoneNumber', values.phoneNumber);
         form.append('image', imageUser);
 
-        const res = await axios.put(`https://pa-be-k3.herokuapp.com/api/user/update/${isLoggedIn}`, 
+        const res = await axios.put(`https://new-pa-be-k3.herokuapp.com/api/user/update/${isLoggedIn}`, 
           form, {
             headers: {
               "Content-Type": "multipart/form-data",

@@ -19,9 +19,8 @@ const AddProduct = () => {
                 },
             }
             console.log(form);
-            const response = await axios.post('https://pa-be-k3.herokuapp.com/api/product/create', form, config)
+            const response = await axios.post('https://new-pa-be-k3.herokuapp.com/api/product/create', form, config)
             // setRefetch(response.data.data)
-            console.log(response.data.data);
 
         } catch (error) {
             console.log(error)
@@ -29,10 +28,8 @@ const AddProduct = () => {
     }
     const storeCategory = async (form) => {
         try {
-            console.log(form);
-            const response = await axios.post('https://pa-be-k3.herokuapp.com/api/category/create', form)
+            const response = await axios.post('https://new-pa-be-k3.herokuapp.com/api/category/create', form)
             setRefetch(response.data.data)
-            console.log(response.data.data);
 
         } catch (error) {
             console.log(error)
@@ -41,7 +38,7 @@ const AddProduct = () => {
 
     const getCategoriesData = async () => {
         try {
-            const response = await axios.get('https://pa-be-k3.herokuapp.com/api/category/list')
+            const response = await axios.get('https://new-pa-be-k3.herokuapp.com/api/category/list')
             // console.log(response.data.data);
             return setCategories(response.data.data)
         } catch (error) {

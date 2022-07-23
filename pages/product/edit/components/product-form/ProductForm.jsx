@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import currencyFormat from "../../../../dashboard/service/currency";
 import { Plus } from "react-feather"
 import { useFilePicker } from 'use-file-picker';
-import Link from "next/link";
+import Swal from 'sweetalert2';
 import Router from "next/router";
 import { LoadingAnimation } from "../../../../../components";
 import ModalCategory from "../modal-category/ModalCategory";
@@ -11,11 +11,13 @@ import ErrorBox from "../error-box/ErrorBox";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-const ProductForm = ({ storeProduct, categories, storeCategory }) => {
+const ProductForm = ({ isProduct, updateProduct, categories, storeCategory, deleteProduct }) => {
+
+    const { id } = Router.query;
 
     const [openFileSelector, { filesContent, loading, errors }] = useFilePicker({
         readAs: 'DataURL',
-        accept: 'image/*',
+        accept:".png, .jpg, .jpeg",
         multiple: true,
         limitFilesConfig: { max: 4 },
         // minFileSize: 0.1, // in megabytes
@@ -29,13 +31,23 @@ const ProductForm = ({ storeProduct, categories, storeCategory }) => {
     });
 
     const [form, setForm] = useState({
-        name: "",
-        description: "",
+        name: 'product',
+        description: 'description',
         price: 0,
         categoryId: 0
     })
-
     const [onLoading, setOnLoading] = useState(false);
+
+    useEffect(() => {
+        if (isProduct) {
+            setForm({
+                name: isProduct.name,
+                description: isProduct.description,
+                price: isProduct.price,
+                categoryId: 0
+            })
+        }
+    }, [isProduct])
 
     const [isOpen, setIsOpen] = useState(false)
     function setModal() {
@@ -97,14 +109,43 @@ const ProductForm = ({ storeProduct, categories, storeCategory }) => {
         } else {
             addData().then((_) => {
                 setOnLoading(true)
-                storeProduct(formData).then(() => {
-                    // Router.reload()
+                console.log(form)
+                updateProduct(id, formData).then(() => {
+                    
                     Router.push('/daftar-jual/list')
                 });
             }).catch((err) => {
-                console.log(err);
+                console.log(err)
+                
             });
         }
+    }
+
+    const confirmDelete = () => {
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Produk ini akan dihapus secara permanen",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteProduct(id).then(() => {
+                    Router.push('/daftar-jual/list')
+                }).catch((err) => {
+                    console.log(err);
+                }).finally(() => {
+                    Swal.fire(
+                        'Terhapus!',
+                        'Produk berhasil dihapus',
+                        'success'
+                    )
+                }
+                )
+            }
+        })
     }
 
     return (
@@ -118,6 +159,7 @@ const ProductForm = ({ storeProduct, categories, storeCategory }) => {
                             className="form-control br-10"
                             id="name" name="name"
                             placeholder="Nama Produk"
+                            value={form.name}
                             onChange={(e) => setForm({
                                 ...form,
                                 name: e.target.value
@@ -131,6 +173,7 @@ const ProductForm = ({ storeProduct, categories, storeCategory }) => {
                             className="form-control br-10"
                             id="price"
                             name="price"
+                            value={form.price}
                             placeholder={currencyFormat(0)}
                             onChange={(e) => setForm({
                                 ...form,
@@ -144,7 +187,7 @@ const ProductForm = ({ storeProduct, categories, storeCategory }) => {
                         <div className="d-flex">
                             <select id="categoryId" className="form-control br-10" defaultValue="0" onClick={(e) => setForm({
                                 ...form,
-                                categoryId: e.target.value
+                                categoryId: e.target.value,
                             })}>
                                 <option value="0">-- Pilih Kategori --</option>
                                 {categories.map((category, index) => {
@@ -164,6 +207,7 @@ const ProductForm = ({ storeProduct, categories, storeCategory }) => {
                             className="form-control br-10"
                             id="description"
                             rows={3}
+                            value={form.description}
                             defaultValue={""}
                             placeholder="Contoh : Jalan Ikan Hiu 33" onChange={(e) => setForm({
                                 ...form,
@@ -212,14 +256,20 @@ const ProductForm = ({ storeProduct, categories, storeCategory }) => {
                         </div>
                         : <div className="row">
                             <div className="col">
-                                <Link href="/product/add/preview"><button type="button" className="btn btn-outline-primary w-100">Preview</button></Link>
+                                <button 
+                                    type="button" 
+                                    className="btn btn-outline-danger w-100"
+                                    onClick={() => confirmDelete()}
+                                >
+                                    Delete
+                                </button>
                             </div>
                             <div className="col">
-                                <button type="button" className="btn btn-primary w-100" onClick={
+                                <button type="disabled button" className="btn btn-primary w-100" onClick={
                                     () => {
                                         verivyData()
                                     }
-                                }>Terbitkan</button>
+                                }>Update</button>
                             </div>
                         </div>
                 }
