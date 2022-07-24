@@ -1,7 +1,7 @@
 import Logo from "./components/logo";
 import SearchEngine from "./components/SearchEngine";
 import LoginButton from "./components/LoginButton";
-import IconButton from "./components/Icon";
+import IconButton from "./components/IconButton";
 import { useEffect, useState } from "react";
 
 const NavBar = ({ setSearch, setRefetch }) => {
