@@ -6,7 +6,7 @@ import axios from 'axios'
 import { useRouter } from "next/router"
 import Swal from 'sweetalert2'
 import { PhoneCall } from 'react-feather';
-import ModalWa from './../modal-wa/index';
+import ModalWa from "../modal-wa/ModalWa"
 
 const CardProduct = ({ isOffer, isProduct }) => {
 
@@ -17,23 +17,23 @@ const CardProduct = ({ isOffer, isProduct }) => {
 
     const RejectOffer = async () => {
         try {
-            const res = await axios.put(`https://new-pa-be-k3.herokuapp.com/api/offer/update/${isOffer.id}`, 
-            {
-                status : 0
+            const res = await axios.put(`https://new-pa-be-k3.herokuapp.com/api/offer/update/${isOffer.id}`,
+                {
+                    status: 0
 
-            }, { 
+                }, {
                 headers: {
                     "Content-Type": "application/json",
-                    'Authorization' : localStorage.getItem('token').substring(7)
+                    'Authorization': localStorage.getItem('token').substring(7)
                 }
             })
 
-             Swal.fire({
-                 position: 'top',
-                 title: 'Offer Rejected',
-                 showConfirmButton: false,
-                 timer: 1500
-             })
+            Swal.fire({
+                position: 'top',
+                title: 'Offer Rejected',
+                showConfirmButton: false,
+                timer: 1500
+            })
 
             router.push('/daftar-jual/list')
         } catch (err) {
@@ -56,7 +56,7 @@ const CardProduct = ({ isOffer, isProduct }) => {
                 <Card.Body>
                     <div className="d-flex">
                         <div className="">
-                            <img src={isProduct.images? isProduct.images[0].image : "https://dummyimage.com/300x200/000000/fff.png"} alt="" width={48} height={48} className="br-10" />
+                            <img src={isProduct.images ? isProduct.images[0].image : "https://dummyimage.com/300x200/000000/fff.png"} alt="" width={48} height={48} className="br-10" />
                         </div>
                         <div className="col ms-3">
                             <div className="align-self-center col">
@@ -82,22 +82,22 @@ const CardProduct = ({ isOffer, isProduct }) => {
                     </div>
                 </Card.Body>
                 <Card.Footer className="bg-white">
-                    {terima ? 
+                    {terima ?
                         <div className="w-100 d-flex fles-wrap">
                             <div className="ms-auto">
                                 <button type="button" className={`${status} btn btn-outline-primary br-20`}>Status</button>
                             </div>
                             <div className="ms-3">
                                 <button type="button" className={`${status} btn btn-primary br-20`} onClick={
-                                    () => {setTerima(true)}
-                                }>Hubungi di <PhoneCall size={17}/></button>
+                                    () => { setTerima(true) }
+                                }>Hubungi di <PhoneCall size={17} /></button>
                             </div>
                         </div>
-                        : 
+                        :
                         <div className="w-100 d-flex fles-wrap">
                             <div className="ms-auto">
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     className={`${status} btn btn-outline-primary br-20`}
                                     onClick={() => RejectOffer()}
                                 >
@@ -106,14 +106,14 @@ const CardProduct = ({ isOffer, isProduct }) => {
                             </div>
                             <div className="ms-3">
                                 <button type="button" className={`${status} btn btn-primary br-20`} onClick={
-                                    () => {setIsOpen(true)}
+                                    () => { setIsOpen(true) }
                                 }>Terima</button>
                             </div>
                         </div>
                     }
                 </Card.Footer>
             </Card>
-            {isOpen && <ModalWa setIsOpen={setIsOpen} />}
+            <ModalWa isOpen={isOpen} setIsOpen={setIsOpen} isProduct={isProduct} isBuyyer={isOffer} />
         </div >
     )
 }

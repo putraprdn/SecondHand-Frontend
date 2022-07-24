@@ -2,7 +2,7 @@ import CurrencyInput from 'react-currency-input-field';
 import styles from '../../../../../../styles/ModalWa.module.css'
 import { currencyFormat } from '../../../../../../services/currency.js';
 
-const ModalWa = ({ setIsOpen }) => {
+const ModalWaX = ({ setIsOpen }) => {
 
   return (
     <>
@@ -37,4 +37,4 @@ const ModalWa = ({ setIsOpen }) => {
   )
 }
 
-export default ModalWa
+export default ModalWaX
