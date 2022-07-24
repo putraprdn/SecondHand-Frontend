@@ -34,8 +34,15 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
+        const token = localStorage.getItem('token')
+        if (!token) {
+            dispatch(logout(null))
+            Router.push("/auth/login");
+        }
+
         getProductData()
         getCategoriesData()
+
     }, []);
 
     return (
