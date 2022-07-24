@@ -25,6 +25,7 @@ const ModalCategory = ({ isOpen, setModal, storeCategory, toastShow }) => {
 
     return (
         <Modal
+            onHide={() => setModal(false)}
             show={isOpen}
             size="ml"
             aria-labelledby="contained-modal-title-vcenter"

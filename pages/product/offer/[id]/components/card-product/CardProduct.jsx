@@ -7,6 +7,7 @@ import { useRouter } from "next/router"
 import Swal from 'sweetalert2'
 import { PhoneCall } from 'react-feather';
 import ModalWa from "../modal-wa/ModalWa"
+import ModalStatus from "../modal-status/ModalStatus"
 
 const CardProduct = ({ isOffer, isProduct }) => {
 
@@ -110,8 +111,9 @@ const CardProduct = ({ isOffer, isProduct }) => {
                     }
                 </Card.Footer>
             </Card>
-            <ModalWa isOpen={isOpen} setIsOpen={setIsOpen} isProduct={isProduct} isBuyyer={isOffer} />
-        </div >
+            {/* <ModalWa isOpen={isOpen} setIsOpen={setIsOpen} isProduct={isProduct} isBuyyer={isOffer} /> */}
+            <ModalStatus statusOpen={isOpen} setStatusOpen={setIsOpen} />
+        </div>
     )
 }
 

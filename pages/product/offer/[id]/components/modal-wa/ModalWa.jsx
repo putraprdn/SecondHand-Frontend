@@ -13,7 +13,7 @@ const ModalWa = ({ isOpen, setIsOpen, isBuyyer, isProduct }) => {
         <Modal
             onHide={() => setIsOpen(false)}
             show={isOpen}
-            size="ml"
+            size="md"
             aria-labelledby="contained-modal-title-vcenter"
             centered
         >
