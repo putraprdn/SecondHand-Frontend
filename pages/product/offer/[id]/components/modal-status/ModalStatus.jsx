@@ -42,10 +42,6 @@ const ModalStatus = ({ statusOpen, setStatusOpen }) => {
         }
     }
 
-    useEffect(() => {
-        console.log(value)
-    })
-
     return (
         <Modal
             onHide={() => setStatusOpen(false)}
