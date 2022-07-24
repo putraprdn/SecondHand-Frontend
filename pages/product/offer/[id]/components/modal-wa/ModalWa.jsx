@@ -1,13 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Modal, Button, Card } from "react-bootstrap";
 import { currencyFormat } from "../../../../../../services/currency";
 import { getTimeFormat } from "../../../../../../services/TimeFormat";
 
 const ModalWa = ({ isOpen, setIsOpen, isBuyyer, isProduct }) => {
 
-    const onSendWa = () => {
-        window.open(`https://web.whatsapp.com/send?phone=${isBuyyer.createdBy.phoneNumber}&text=Hai%20${isBuyyer.createdBy.name},%20saya%20ingin%20menjual%20${isProduct.name}%20dengan%20harga%20${currencyFormat(isBuyyer.price)}%20yang%20kamu%20tawar.%20Silahkan%20hubungi%20saya.%20Terima%20kasih.`, '_blank');
+    const [number, setNumber] = useState('')
+
+    const validPhoneNumber = (number) => {
+        if (number.substring(0, 2) === '08') {
+            const result = "62" + number.substring(1)
+            return result
+        }
+        else {
+            return number
+        }
     }
+
+    const onSendWa = () => {
+        window.open(`https://web.whatsapp.com/send?phone=${validPhoneNumber(isBuyyer.createdBy.phoneNumber)}&text=Hai%20${isBuyyer.createdBy.name},%20saya%20ingin%20menjual%20${isProduct.name}%20dengan%20harga%20${currencyFormat(isBuyyer.price)}%20yang%20kamu%20tawar.%20Silahkan%20hubungi%20saya.%20Terima%20kasih.`, '_blank');
+    }
+
 
     return (
         <Modal

@@ -14,7 +14,8 @@ const CardProduct = ({ isOffer, isProduct }) => {
     const router = useRouter()
     const [status, setStatus] = useState('')
     const [terima, setTerima] = useState(false)
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false)
+    const [modalStatus, setModalStatus] = useState(false)
 
     const RejectOffer = async () => {
         try {
@@ -83,7 +84,9 @@ const CardProduct = ({ isOffer, isProduct }) => {
                     {terima ?
                         <div className="w-100 d-flex fles-wrap">
                             <div className="ms-auto">
-                                <button type="button" className={`${status} btn btn-outline-primary br-20`}>Status</button>
+                                <button type="button" className={`${status} btn btn-outline-primary br-20`} onClick={
+                                    () => { setModalStatus(true) }
+                                }>Status</button>
                             </div>
                             <div className="ms-3">
                                 <button type="button" className={`${status} btn btn-primary br-20`} onClick={
@@ -111,8 +114,8 @@ const CardProduct = ({ isOffer, isProduct }) => {
                     }
                 </Card.Footer>
             </Card>
-            {/* <ModalWa isOpen={isOpen} setIsOpen={setIsOpen} isProduct={isProduct} isBuyyer={isOffer} /> */}
-            <ModalStatus statusOpen={isOpen} setStatusOpen={setIsOpen} />
+            <ModalWa isOpen={isOpen} setIsOpen={setIsOpen} isProduct={isProduct} isBuyyer={isOffer} />
+            <ModalStatus statusOpen={modalStatus} setStatusOpen={setModalStatus} />
         </div>
     )
 }
