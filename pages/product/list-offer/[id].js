@@ -1,14 +1,12 @@
 import { NavBar, SellerCardProfile } from '../../../components'
 import { getRequest } from '../../api/apiConfig'
 import { useState, useEffect } from 'react'
-import { getCategoryName } from '../../../services/getCategoryName'
-
-import { useSelector } from "react-redux";
-import { selectUser } from "../../../redux/slices/userSilce";
+import { useRouter } from 'next/router'
 
 const ProductOffer = ({offerDetail}) => {
 
     const [offer, setOffer] = useState([])
+    const router = useRouter()
 
     const filterOffer = (offerDetail) => {
         offerDetail.map((item) => {
@@ -29,10 +27,22 @@ const ProductOffer = ({offerDetail}) => {
         <NavBar />
         <div className="container px-5">
             <div className="d-flex flex-column align-items-center overflow-scroll vh-100">
+                <div className="text-center">
+                    <h3>List Penawar</h3>
+                </div>
                 {productOffer.length > 0 ?
                     productOffer.map((item, index) => {
                         return (
-                            <div className="p-2 w-50" key={index}> 
+                            <div 
+                                className="p-2 w-50" 
+                                style={{ cursor:"pointer" }}  
+                                key={index}
+                                onClick={() => {
+                                    router.push({
+                                        pathname: `/product/offer/${item.id}`,
+                                    })
+                                }}
+                            > 
                                 <SellerCardProfile user={item.createdBy}/>
                             </div>
                         )
@@ -56,8 +66,6 @@ export async function getServerSideProps(context) {
             offerDetail
         }
     }
-
-    
 
 }
 

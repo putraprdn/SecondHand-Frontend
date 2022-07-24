@@ -5,7 +5,16 @@ import axios from "axios";
 import Head from "next/head";
 import OfferForm from "./components/offer-form/OfferForm";
 
-const ProductOffer = () => {
+const ProductOffer = ({ offerDetail, product }) => {
+
+    const [offer, setOffer] = useState({})
+    const [productData, setProductData] = useState({})
+
+
+    useEffect(() => {
+        setOffer(offerDetail)
+        setProductData(product)
+    })
 
     return (
         <div>
@@ -18,11 +27,28 @@ const ProductOffer = () => {
             <div className="container">
                 <div className="row justify-content-center">
                     <BackButton />
-                    <OfferForm />
+                    <OfferForm isOffer={offer} isProduct={productData} />
                 </div>
             </div>
         </div>
     )
+}
+
+export async function getServerSideProps(context) {
+    const  id  = context.params.id
+    const offer = await axios.get(`https://new-pa-be-k3.herokuapp.com/api/offer/${id}`)
+    const productData = await axios.get(`https://new-pa-be-k3.herokuapp.com/api/product/${offer.data.data.productId}`)
+
+    const offerDetail = await offer.data.data
+    const product = await productData.data.data
+
+    return {
+        props: {
+            offerDetail,
+            product,
+        }
+    }
+
 }
 
 export default ProductOffer;
