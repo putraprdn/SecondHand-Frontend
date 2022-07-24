@@ -265,7 +265,7 @@ const ProductForm = ({ isProduct, updateProduct, categories, storeCategory, dele
                                 </button>
                             </div>
                             <div className="col">
-                                <button type="disabled button" className="btn btn-primary w-100" onClick={
+                                <button type=" button" className="disabled btn btn-primary w-100" onClick={
                                     () => {
                                         verivyData()
                                     }

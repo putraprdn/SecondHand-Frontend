@@ -30,9 +30,9 @@ const CardProduct = ({ isOffer, isProduct }) => {
 
              Swal.fire({
                  position: 'top',
-                 title: 'Offer Rejected',
+                 text: 'Offer Rejected',
                  showConfirmButton: false,
-                 timer: 1500
+                 timer: 2500
              })
 
             router.push('/daftar-jual/list')

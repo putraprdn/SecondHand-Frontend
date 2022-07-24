@@ -27,7 +27,11 @@ const Diminati = () => {
         productFilter.map( async (item) => {
           const res = await getRequest(`offer/product/${item.id}`)
           if(res.data.data.length > 0 ){
-            setOffer(offer => [...offer, item])
+            res.data.data.map( (offerDetail) => {
+              if(offerDetail.status === 'PENDING'){
+                setOffer(offer => [...offer, item])
+              }
+            })
           }
         })
         

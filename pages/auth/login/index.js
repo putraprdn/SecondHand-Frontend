@@ -9,7 +9,8 @@ import { LoadingAnimation } from "../../../components";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/router';
-import { postRequest } from '../../api/apiConfig';
+import { postRequest, getRequest} from '../../api/apiConfig';
+import axios from 'axios'
 
 import { useDispatch } from 'react-redux'
 import { login } from '../../../redux/slices/userSilce'
@@ -67,6 +68,29 @@ export default function Login() {
         setOnLoading(false)
       }
   }  
+
+  // const onGoogleLogin = async () => {
+  //   try {
+  //     const user = window.open('https://new-pa-be-k3.herokuapp.com/user/auth/google', "mywindow","location=1,status=1,scrollbars=1, width=800,height=800")
+
+  //     // const user = await axios.get('https://new-pa-be-k3.herokuapp.com/user/auth/google ')
+  //     // localStorage.setItem('token', `Bearer ${user.data.token}`)
+  //     // dispatch(login({
+  //     //   uid : user.data.data.id,
+  //     //   name : user.data.data.name,
+  //     //   email : user.data.data.email,
+  //     //   image : user.data.data.image,
+  //     //   city : user.data.data.city,
+  //     //   address : user.data.data.address,
+  //     //   phone : user.data.data.phoneNumber,
+  //     // }))
+
+  //     // router.push( '/' )
+  //   } catch (error) {
+  //     setMsg(error.response?.data?.message)
+  //     setOnLoading(false)
+  //   }
+  // }
 
   return (
     <div className={styles.container}>
@@ -131,7 +155,7 @@ export default function Login() {
                 }
               </form>
             </div>
-            <div className={styles.line}>
+            {/* <div className={styles.line}>
               <hr />
               <span>or</span>
               <hr />
@@ -141,12 +165,16 @@ export default function Login() {
                 <Image src={facebookImage} height={20} width={20} alt="facebook"></Image>
                 Facebook
               </button>
-              <button type="button" className={styles.auth}>
+              <button 
+                type="button" 
+                className={styles.auth}
+                onClick={() => onGoogleLogin()}
+              >
                 <Image src={googleImage} height={20} width={20} alt="google"></Image> Google
               </button>
-            </div>
+            </div> */}
             <div className={styles.line2}>
-              <hr></hr>
+              {/* <hr></hr> */}
             </div>
             <p className={styles.footer}>
               Belum punya akun? <a href="register">Daftar disini</a>
