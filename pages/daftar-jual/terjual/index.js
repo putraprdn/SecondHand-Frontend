@@ -1,7 +1,7 @@
 import { LayoutDaftarJual, CardProduct, NotFound } from "../../../components"
 import { useEffect, useState } from "react"
 import { getRequest } from "../../api/apiConfig"
-import { filterProductByAvailable, filterProductByName } from "../../../services/filterProduct"
+import { filterProductSold, filterProductByName } from "../../../services/filterProduct"
 import { useRouter } from "next/router"
 
 import { useSelector } from "react-redux";
@@ -20,7 +20,7 @@ const Terjual = () => {
     const getProductData = async () => {
       try {
         const res = await getRequest('product/list')
-        const productFilter = filterProductByName(filterProductByAvailable(res.data.data, false), userData.email)
+        const productFilter = filterProductByName(filterProductSold(res.data.data, true), userData.email)
         setProduct(productFilter)
       } catch (error) {
         console.log(error);
